@@ -32,3 +32,48 @@ Quick to play, easy to learn
 It's a free print-and-play game you can download and make at home
 
 Think of it like a mini horror movie where you're the hero trying to save the day - but you only have until midnight to do it!
+
+
+---
+# How to set up a python virtual environment
+## In Command Prompt or PowerShell change to the directory of the project then type:
+
+```
+python -m venv venv\
+```
+
+
+## How to activate the environment
+From the same directory type:
+
+```
+venv\scripts\activate
+```
+
+Your prompt should look something like:
+```
+(venv) C:\wherever\you\are
+```
+
+You can now install packages to this virtual environment as you would normally install a global package.
+```
+pip install package-name
+```
+
+## How to create requirements.txt
+Once you have installed all the packages required you can create requirements.txt with the following command:
+```
+pip freeze > requirements.txt
+```
+## How to install packages from requirements.txt
+From the project directory (assuming that’s where requirements.txt is and make sure you have activated the venv)
+```
+pip install -r requirements.txt
+```
+
+## How to deactivate the environment
+
+Type:
+```
+deactivate
+```
