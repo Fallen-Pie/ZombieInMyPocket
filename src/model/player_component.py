@@ -7,3 +7,9 @@ class Player:
 
     def clear_inventory(self):
         pass
+
+    def set_location(self, x_location, y_location):
+        pass
+
+    def get_location(self):
+        pass

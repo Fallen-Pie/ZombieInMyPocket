@@ -10,7 +10,6 @@ class EnvironmentComponent(object):
         pass
         # self.__tile_sequence = []
 
-
     def place_tile(self, tile, x_location, y_location, rotation):
         """ Place a tile on the environment """
         # tile -> Tile object
