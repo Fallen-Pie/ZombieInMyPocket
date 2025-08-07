@@ -201,3 +201,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ignore JetBrains swap and merge conflict files
+.idea/*.swp
+.idea/*_LOCAL_*.xml
+.idea/*_REMOTE_*.xml
+.idea/*_BACKUP_*.xml
+.idea/*_BASE_*.xml
+
+# Optional: ignore all .idea config files (not always recommended)
+# .idea/
+
+# Optional: ignore __pycache__ and Python bytecode
+__pycache__/
+*.py[cod]
