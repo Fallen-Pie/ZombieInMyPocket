@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Black">
+<<<<<<< HEAD
+    <option name="sdkName" value="Python 3.12" />
+=======
+    <option name="sdkName" value="ZombieInMyPocket" />
+>>>>>>> davewatts-proposed-file-structure
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="ZombieInMyPocket" project-jdk-type="Python SDK" />
+</project>
