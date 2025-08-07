@@ -1,3 +1,6 @@
+import sys
+print(sys.executable)
+
 from controller.game_controller import GameController
 
 def main():
