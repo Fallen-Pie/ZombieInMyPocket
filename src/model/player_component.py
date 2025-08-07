@@ -12,4 +12,5 @@ class Player:
         pass
 
     def get_location(self):
+        """ Returns Position """
         pass
