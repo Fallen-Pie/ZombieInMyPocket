@@ -58,3 +58,6 @@ class GamePieces(IGamePieces):
 
     def is_stuck(self) -> bool:
         return self._board.is_stuck()
+
+    def does_tile_exist(self, position: Position) -> bool:
+        pass
