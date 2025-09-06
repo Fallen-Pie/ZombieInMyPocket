@@ -5,7 +5,7 @@ class Rotation(Enum):
 
     NONE = 0
     """No rotation."""
-    
+
     CLOCKWISE = 1
     """Rotated 90 degrees clockwise."""
 
@@ -24,10 +24,27 @@ class Direction(Enum):
     SOUTH = 2
     WEST = 3
 
+class Input_options(Enum):
+    """Input_options yes or no."""
+
+    YES = 0
+    NO = 1
+
+
 class ItemType(Enum):
-    WEAPON = 0,
-    HEALING = 1
+    WEAPON = 0
+    HEALING = 1  # Can of Soda
+    COMBINE_ONLY = 2  # Candle and Gasoline
+    ESCAPE = 3  # Using oil by itself without combining it
+
 
 class ItemName(Enum):
-    SPADE = "Spade",
-    AXE = "Axe"
+    OIL = "Oil"
+    GASOLINE = "Gasoline"
+    BOARD_WITH_NAILS = "Board With Nails"
+    CAN_OF_SODA = "Can of Soda"
+    GRISLY_FEMUR = "Grisly Femur"
+    GOLF_CLUB = "Golf Club"
+    CANDLE = "Candle"
+    CHAINSAW = "Chainsaw"
+    MACHETE = "Machete"
