@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Callable, Any
 
 from src.model.game_time.game_time import GameTime
@@ -8,7 +9,7 @@ from src.model.turn.turn_states import *
 
 
 
-class Turn(ITurn):
+class Turn(ITurn, ABC):
     """
     Controls the flow of a turn from start to finish by calling on other
     components in order to progress the turn.
@@ -29,7 +30,11 @@ class Turn(ITurn):
     #make the turn flow object
     @classmethod
     def create(
-            cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
+            cls,
+            the_game_pieces,
+            the_player,
+            the_user_interface,
+            the_game_time = GameTime()
     ) -> ITurn:
         """
         Create and initialize a new turn.
@@ -57,8 +62,7 @@ class Turn(ITurn):
         flow = TurnFlow(
             the_services=services,
             the_states=states,
-            the_transitions=transitions,
-            the_game_time=the_game_time,
+            the_transitions=transitions
         )
 
         return cls(flow)

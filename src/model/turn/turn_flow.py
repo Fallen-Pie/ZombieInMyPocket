@@ -1,4 +1,5 @@
 """Controls the flow of the turn by changing state"""
+from abc import ABC
 from typing import Callable, Any, TYPE_CHECKING
 
 from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
@@ -8,7 +9,7 @@ if TYPE_CHECKING:
     from .state import State
 
 
-class TurnFlow(ITurn):
+class TurnFlow(ITurn, ABC):
     """
     Tracks the state of a turn,
     the context of the state machine, in the State Design Pattern
