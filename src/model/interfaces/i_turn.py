@@ -13,21 +13,21 @@ class ITurn(ABC):
     and coordination between game components and user interface.
     """
 
-    @classmethod
-    @abstractmethod
-    def create(cls, the_game_pieces, the_player, the_user_interface):
-        """
-        Create and initialize a new turn.
-
-        Args:
-            the_game_pieces: The game pieces involved in the turn.
-            the_player: The player object.
-            the_user_interface: The user interface to handle input/output.
-
-        Returns:
-            Turn: An initialized Turn instance with its turn flow set up.
-        """
-        pass
+    # @classmethod
+    # @abstractmethod
+    # def create(cls, the_game_pieces, the_player, the_user_interface):
+    #     """
+    #     Create and initialize a new turn.
+    #
+    #     Args:
+    #         the_game_pieces: The game pieces involved in the turn.
+    #         the_player: The player object.
+    #         the_user_interface: The user interface to handle input/output.
+    #
+    #     Returns:
+    #         Turn: An initialized Turn instance with its turn flow set up.
+    #     """
+    #     pass
 
     @abstractmethod
     def start_turn(self) -> None:

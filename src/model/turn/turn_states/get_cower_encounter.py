@@ -1,4 +1,4 @@
-from src.enums_and_types.enums import Input_options
+from src.enums_and_types.enums import InputOptions
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 from src.model.encounters import encounters
@@ -14,7 +14,7 @@ class GetCowerEncounter(State):
             ServiceNames.UI,
             ServiceMethods.GET_INPUT,
             prompt = 'Would you like to cower',
-            options = [Input_options.YES, Input_options.NO],
+            options = [InputOptions.YES, InputOptions.NO],
             callback = self.get_request_handler()
             )
 

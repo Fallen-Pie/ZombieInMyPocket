@@ -57,7 +57,8 @@ class Turn(ITurn):
         flow = TurnFlow(
             the_services=services,
             the_states=states,
-            the_transitions=transitions
+            the_transitions=transitions,
+            the_game_time=the_game_time,
         )
 
         return cls(flow)

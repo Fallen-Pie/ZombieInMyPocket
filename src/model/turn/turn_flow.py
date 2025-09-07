@@ -142,7 +142,13 @@ class TurnFlow(ITurn):
         return self._services.get(name, None)
 
 
-    def call_service_method(self, name: ServiceNames, method: ServiceMethods, *args, **kwargs) -> Any:
+    def call_service_method(
+            self,
+            name: ServiceNames,
+            method: ServiceMethods,
+            *args,
+            **kwargs
+    ) -> Any:
         """calls a method on the given service"""
         service = self._get_service(name)
         if service is None:
