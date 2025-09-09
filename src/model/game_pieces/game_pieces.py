@@ -1,6 +1,7 @@
 from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
+from ..game_time.game_time import ITime
 from .tile import Tile
 from .dev_card import DevCard
 from .board import Board
@@ -10,14 +11,15 @@ from random import shuffle
 
 class GamePieces(IGamePieces):
 
-    def __init__(self) -> None:
-        self.setup()
+    def __init__(self, time: ITime) -> None:
+        self.setup(time)
 
-    def setup(self) -> None:
+    def setup(self, time: ITime) -> None:
         self._board = Board()
         self._dev_cards: list[IDevCard] = DevCard.get_dev_cards()
         self._indoor_tiles: list[ITile] = Tile.get_indoor_tiles()
         self._outdoor_tiles: list[ITile] = Tile.get_outdoor_tiles()
+        self._time = time
 
         # The top card before it is shuffled is the foyer
         # so add it to the board before we shuffle
@@ -27,8 +29,15 @@ class GamePieces(IGamePieces):
         # Shuffle the tiles
         shuffle(self._indoor_tiles)
         shuffle(self._outdoor_tiles)
+        shuffle(self._dev_cards)
 
     def draw_dev_card(self) -> IDevCard:
+        # Increase the time and reshuffle if no cards are left
+        if self.dev_cards_remaining() == 0:
+            self._time.increase_current_time()
+            if self._time.get_current_time() != '12:00am':
+                self._dev_cards = DevCard.get_dev_cards()
+                shuffle(self._dev_cards)
         return self._dev_cards.pop()
 
     def dev_cards_remaining(self) -> int:
@@ -57,6 +66,18 @@ class GamePieces(IGamePieces):
 
     def can_move_to_new_tile(self, placed_tile: ITile,
                              placed_tile_exit: Direction) -> bool:
+
+        # Can't move if there are no tiles left
+        if self.outdoor_tiles_remaining() == 0:
+            if placed_tile.is_outdoors():
+                return False
+            elif placed_tile.get_front_door() == placed_tile_exit:
+                return False
+        if self.indoor_tiles_remaining() == 0:
+            if not placed_tile.is_outdoors():
+                if placed_tile.get_front_door() != placed_tile_exit:
+                    return False
+
         return self._board.can_move_to_new_tile(placed_tile, placed_tile_exit)
 
     def place_tile(self, new_tile: ITile, new_exit: Direction,
