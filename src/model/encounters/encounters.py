@@ -1,58 +1,60 @@
-from abc import ABC, abstractmethod
-from typing import Callable
-from src.model.player.player import Player
+"""Encounter Class"""
 
-class IEncounter(ABC):
-    """Abstract Class for building other Encounter Classes"""
-    @abstractmethod
-    def handle_encounter(self, player) -> Player:
-        ...
-
-class HealthEncounter(IEncounter):
-    """Handles Health Encounters"""
-    def __init__(self, value):
-        self.health = value
-
-    def handle_encounter(self, player) -> Player:
-        player.heal(self.health)
-        return player
-
-class CowerEncounter(IEncounter):
-    """Handles Cower Encounter"""
-    def __init__(self):
-        self.health_increase = 3
-
-    def handle_encounter(self, player) -> Player:
-        player.heal(self.health_increase)
-        return player
-
-class CombatEncounter(IEncounter):
-    """Handles Combat Encounters"""
-    def __init__(self, value):
-        self.zombies = value
-
-    def handle_encounter(self, player) -> Player:
-        damage = self.zombies - player.attack_power
-        if damage > 4:
-            damage = 4
-        elif damage < 0:
-            damage = 0
-        player.take_damage(damage)
-        return player
+"""Parent Encounter Class"""
+class Encounter:
+    def __init__(self, value=None):
+        self._value = value
         
-class ItemEncounter(IEncounter):
-    """Handles Item Encounters"""
-    def __init__(self, new_item):
-        self.item = new_item
+    @property
+    def value(self):
+        """Get encounter value"""
+        return self._value
 
-    def handle_encounter(self, player) -> Player:
+    @value.setter
+    def value(self, new_value):
+        """Set encounter value"""
+        self._value = new_value
+
+    def handle_encounter(self, player):
+        """Base method to be overridden by child classes"""
+        raise NotImplementedError("Subclasses must implement handle_encounter")
+
+
+"""Child Classess"""
+class TotemEncounter(Encounter):
+    """Encounter where the player finds a totem"""
+
+    def handle_encounter(self, player):
+        player.inventory.append("Totem")
+        return player
+
+class HealthEncounter(Encounter):
+    """Encounter where the player gains health"""
+
+    def handle_encounter(self, player):
+        player.health += 3
+        return player
+
+class ItemEncounter(Encounter):
+    """Encounter where the player finds an item"""
+
+    def handle_encounter(self, player):
         player.add_item_to_inventory(self.item)
         return player
 
-class MessageEncounter(IEncounter):
-    """Handles Message Encounters"""
-    def __init__(self, new_code):
-        self.message_code = new_code
+class MessageEncounter(Encounter):
+    """Encounter that gives a message"""
 
-    def handle_encounter(self, player) -> Player:
-        pass
+    def handle_encounter(self, player):
+        return self.value()
+
+
+class CombatEncounter(Encounter):
+    """Encounter that starts combat"""
+
+    def handle_encounter(self, player):
+        combat.start_combat(player)
+
+        
+
+    

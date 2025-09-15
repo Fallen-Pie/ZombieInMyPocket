@@ -1,0 +1,55 @@
+import unittest
+from encounter import Encounter
+import combat from Combat
+
+class Player:
+    def __init__(self):
+        self.health = 100
+        self.damage_taken = 0
+
+    def heal(self, amount):
+        self.health += amount
+
+    def take_damage(self, amount):
+        self.health -= amount
+        self.damage_taken += amount
+
+    def get_health(self):
+        return self.health
+
+class TestEncounter(unittest.TestCase):
+    def setUp():
+        self.player = Player()
+        self.encounter = Encounter()
+
+    def test_value_getter_encounter(self):
+        encounter = Encounter('Message')
+        self.assertEqual(encounter.value, 'Message')
+        encounter.value = 'New Message'
+        self.assertEqual(encounter.value, 'New Message')
+
+    def test_totem_encounter(self):
+        self.player = Player()
+        player.has_totem = False
+        totem_encounter = TotemEncounter()
+        totem_encounter.handle_encounter(self.player)
+        self.assertEqual(self.player.has_totem(), True)
+        
+    def test_health_encounter(self):
+        self.player = Player()
+        health_encounter = HealthEncounter()
+        health_encounter.handle_encounter(self.player)
+        self.assertEqual(self.player.get_health(), 103)
+        
+    def test_message_encounter(self):
+        encounter = Encounter('Message')
+        self.assertEqual(encounter.value, 'Message')
+        encounter.value = 'New Message'
+        self.assertEqual(encounter.value, 'New Message')
+
+    def test_combat_encounter(self):
+        self.player = Player()
+        self.combat = Combat()
+        self.combat_encounter = CombatEncounter()
+        self.combat_encounter.handle_encounter(self.player)
+        #check user input and then test that it acts appropriate
