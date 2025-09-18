@@ -1,6 +1,7 @@
 from enum import Enum
 
 class MessageType(Enum):
+    GAME = "in-game"
     ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
     STATUS = "status"         # Persistent state (time, health, room updates)
     INSTRUCTION = "instruction"  # Tips, prompts, or guidance
