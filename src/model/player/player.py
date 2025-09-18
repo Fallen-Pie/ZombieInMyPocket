@@ -8,7 +8,7 @@ movement, and item interactions including combinations.
 from ..interfaces.i_player import IPlayer
 from ..interfaces.i_item import IItem
 from ..item.item_helper import combine_items
-from src.enums_and_types.types import Position
+from ...enums_and_types.types import Position
 
 
 class Player(IPlayer):
