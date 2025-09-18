@@ -5,14 +5,13 @@ game board, including their exits, encounters, and special properties.
 """
 
 from abc import ABC, abstractmethod
-from ...enums_and_types import *
-from ...model.interfaces.i_encounter import IEncounter #Edited by Alex L
-from ..encounters.encounters import IEncounter
+from src.enums_and_types import *
+from src.model.interfaces.i_encounter import IEncounter #Edited by Alex L
 
 
 class ITile(ABC):
     """Abstract interface for game tiles.
-
+    
     Tiles represent rooms and outdoor areas that the player can explore.
     Each tile has exits, may contain encounters, and can be rotated.
     """
@@ -20,7 +19,7 @@ class ITile(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get the name of this tile.
-
+        
         Returns:
             The tile's descriptive name
         """
@@ -29,7 +28,7 @@ class ITile(ABC):
     @abstractmethod
     def is_outdoors(self) -> bool:
         """Check if this tile represents an outdoor area.
-
+        
         Returns:
             True if this is an outdoor tile, False for indoor
         """
@@ -38,7 +37,7 @@ class ITile(ABC):
     @abstractmethod
     def get_exits(self) -> tuple[Direction, ...]:
         """Get the exit directions for this tile based on its current rotation.
-
+        
         Returns:
             Tuple of Direction values indicating where exits are located
         """
@@ -47,9 +46,9 @@ class ITile(ABC):
     @abstractmethod
     def get_front_door(self) -> Direction | None:
         """Get the direction to the front door if this tile has one.
-
+        
         Only certain tiles (like patio and dining room) have front doors.
-
+        
         Returns:
             Direction to the front door, or None if this tile has no front door
         """
@@ -58,7 +57,7 @@ class ITile(ABC):
     @abstractmethod
     def get_encounter(self) -> IEncounter | None:
         """Get the encounter associated with this tile.
-
+        
         Returns:
             The encounter for this tile, or None if no encounter exists
         """
@@ -67,7 +66,7 @@ class ITile(ABC):
     @abstractmethod
     def set_rotation(self, rotation: Rotation) -> None:
         """Set the rotation of this tile.
-
+        
         Args:
             rotation: The new rotation to apply to the tile
         """

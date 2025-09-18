@@ -1,17 +1,23 @@
 from enum import Enum
 
+class MessageType(Enum):
+    ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
+    STATUS = "status"         # Persistent state (time, health, room updates)
+    INSTRUCTION = "instruction"  # Tips, prompts, or guidance
+    FEEDBACK = "feedback"     # General events (items acquired, score gained) and Actions (draw card, grab item, etc.)
+
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
-    """Messages related to game initialisation."""
+    """Feedback Messages related to game initialisation."""
     GAME_START = "Welcome Player!"
     INITIALISE = "Initialising game..."
     SHUFFLING_CARDS = "Shuffling DevCard deck..."
 
 # Arsenie: [Event-driven] List of the game states, used in get-game-status and game-state-manager.
 class GameStateMessage(Enum):
-    """Codes for game state messages in the game."""
-    ROOM_CHANGED = "You are now in room {}"
+    """Feedback Message Codes for changes in the game triggerred by the user."""
     TIME_CHANGE= "It is now {} PM"
+    ROOM_CHANGED = "You are now in room {}"
     HEALTH_CHANGE = "+{} Health gained"
     ATTACK_SCORE_UPDATE = "+{} Attack score gained"
     ITEM_ACQUIRED = "You acquired a new item: {}"
