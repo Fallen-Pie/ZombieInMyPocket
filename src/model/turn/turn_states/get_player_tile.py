@@ -8,8 +8,8 @@ class GetPlayerTile(State):
         super().__init__(name)
         self.player_location = None
 
-    def enter(self, *args) -> None:
-        self.trigger = Triggers.SELECT_EXIT
+    def enter(self, exit_mode = Triggers.SELECT_EXIT) -> None:
+        self.trigger = exit_mode
 
 
     def _get_player_location(self) -> None:
@@ -21,7 +21,7 @@ class GetPlayerTile(State):
 
     def _get_player_tile(self):
         """Gets the players tile"""
-        self.result = self.use_service(
+        return self.use_service(
             ServiceNames.GAME_PIECES,
             ServiceMethods.GET_TILE,
             self.player_location)
@@ -30,7 +30,7 @@ class GetPlayerTile(State):
     def handle_request(self, *args, **kwargs):
         """Get the players location and the tile at that location"""
         self._get_player_location()
-        self._get_player_tile()
+        self.result = self._get_player_tile()
         super().handle_request()
 
 
@@ -39,7 +39,6 @@ class GetPlayerTile(State):
         self.result = (a_tile, Triggers.PLAYER_TILE_EXIT)
         self.context.state_finished(
             trigger=self.trigger,
-            result=self.result,
-            next_tile=a_tile)
+            result=self.result)
         self.context = None
         #Expected next state select_exit

@@ -2,12 +2,13 @@
 from typing import Callable, Any, TYPE_CHECKING
 
 from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
+from ..interfaces import ITurn
 
 if TYPE_CHECKING:
     from .state import State
 
 
-class TurnFlow:
+class TurnFlow(ITurn):
     """
     Tracks the state of a turn,
     the context of the state machine, in the State Design Pattern
@@ -40,7 +41,6 @@ class TurnFlow:
 
         self._current_state: State | None = None
         # hold the active tile to make it easier to get the tile encounter
-        self._active_tile: Any | None = None
 
         #todo update states and context to use transition_type and maybe active tile
         #self.transition_type = None
@@ -48,18 +48,17 @@ class TurnFlow:
         #the context would use the transition_type to determine the next state
 
 
-    def start(self) -> None:
+    def start_turn(self) -> None:
         start_state = self._get_state_factory(Triggers.READY)
         if start_state is None:
             raise Exception(f"No start_state: use {Triggers.READY} trigger")
         self._current_state = self._enter_next_state(start_state)
 
 
-    def end(self) -> None:
+    def end_turn(self) -> None:
         """Resets the state to its initial state"""
         self._pending_transition = None
         self._current_state = None
-        self._active_tile = None
 
 
     def _enter_next_state(
@@ -77,7 +76,6 @@ class TurnFlow:
             next_state.enter()
 
         return next_state
-        #return None #Passback
 
 
     def _change_state(self) -> None:
@@ -88,8 +86,6 @@ class TurnFlow:
                 self._pending_transition["next_state"],
                 self._pending_transition["previous_result"]
             )
-            if self._pending_transition["next_tile"] is not None:
-                self._active_tile = self._pending_transition["next_tile"]
             self._pending_transition = None
             self._current_state = next_state
         #return None #Passback
@@ -106,8 +102,7 @@ class TurnFlow:
     def state_finished(
             self,
             trigger: Triggers,
-            result: tuple[Any, ...] | None,
-            next_tile: Any | None = None
+            result: tuple[Any, ...] | None
     ) -> None:
         """called when the state is finished"""
         next_transition = self._get_state_factory(trigger)
@@ -115,8 +110,7 @@ class TurnFlow:
             raise Exception(f"No such transition: {trigger}, exiting {self._current_state.name}")
         self._pending_transition: PendingTransition = {
             "next_state": next_transition,
-            "previous_result": result,
-            "next_tile": next_tile
+            "previous_result": result
         }
         #return None
         #The state that called state_finished mast end(return) quickly
@@ -133,7 +127,7 @@ class TurnFlow:
         return is_waiting
 
 
-    def handle_request(self, *args, **kwargs) -> None:
+    def continue_turn(self, *args, **kwargs) -> None:
         """handles incoming requests"""
         if self._current_state is None:
             raise Exception(f"No current state")

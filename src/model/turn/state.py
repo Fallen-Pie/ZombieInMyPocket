@@ -33,7 +33,7 @@ class State(ABC):
         Gets the context request handler,
         only to be used as a callback passed to a service
          """
-        return self.context.handle_request
+        return self.context.continue_turn
 
     @abstractmethod
     def enter(self, *args, **kwargs) -> bool:

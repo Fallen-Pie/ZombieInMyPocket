@@ -1,131 +1,111 @@
+
+from ...model.interfaces.i_player import IPlayer
+from ...model.interfaces.i_item import IItem
 from ..interfaces.i_player import IPlayer
 from ..interfaces.i_item import IItem
 from ..item.item_helper import combine_items
-from src.enums_and_types.types import Position
-
+from ...enums_and_types.types import Position
+from ...model.item.base_item import ConsumableItem
+from ...model.item.combination_engine import CombinationEngine
 
 class Player(IPlayer):
-    """Wrapper class that implements the IPlayer interface."""
-    def __init__(self, initial_health: int = 100,
-                 initial_position: Position = (0, 0),
-                 base_attack_power: int = 1):
-        self.__player_impl = PlayerImplementation(
-            initial_health, initial_position, base_attack_power)
+    """Player iteration-two implementation."""
+
+    def __init__(self, initial_health: int = 6, attack_power: int = 1, inventory_limit: int = 2):
+        self._health = initial_health
+        self._max_health = initial_health
+        self._attack_power = attack_power
+        self._inventory: list[IItem] = []
+        self._position: Position = (0, 0)
+        self._has_totem = False
+        self._inventory_limit = inventory_limit
+        self._combination_engine = CombinationEngine()
 
     def get_health(self) -> int:
-        return self.__player_impl.health
-
-    def get_attack_power(self) -> int:
-        return self.__player_impl.attack_power
-
-    def get_position(self) -> Position:
-        return self.__player_impl.position
-
-    def set_position(self, position: Position) -> None:
-        self.__player_impl.position = position
-
-    def get_inventory(self) -> list[IItem]:
-        return self.__player_impl.inventory
-
-    def take_damage(self, amount: int) -> None:
-        self.__player_impl.take_damage(amount)
-
-    def heal(self, amount: int) -> None:
-        self.__player_impl.heal(amount)
-
-    def has_totem(self) -> bool:
-        return self.__player_impl.has_totem
-
-    def use_item(self, item: IItem) -> None:
-        self.__player_impl.use_item(item)
-
-    def add_item_to_inventory(self, item: IItem) -> None:
-        self.__player_impl.add_item_to_inventory(item)
-
-    def remove_item_from_inventory(self, item: IItem) -> None:
-        self.__player_impl.remove_item_from_inventory(item)
-
-    def combine_items_from_inventory(self) -> bool:
-        return self.__player_impl.combine_items_from_inventory()
-
-
-class PlayerImplementation:
-    """Concrete implementation of the IPlayer interface."""
-
-    def __init__(self, initial_health: int, initial_position: Position,
-                 base_attack_power: int):
-        self._health = initial_health
-        self._base_attack_power = base_attack_power
-        self._inventory: list[IItem] = []
-        self._position = initial_position
-        self._has_totem = False
-
-    @property
-    def health(self) -> int:
+        """Get the player's current health points."""
         return self._health
 
-    @property
-    def attack_power(self) -> int:
-        return self._base_attack_power
-
-    @property
-    def has_totem(self) -> bool:
-        return self._has_totem
-
-    @property
-    def inventory(self) -> list[IItem]:
-        return self._inventory.copy()
-
-    @property
-    def position(self) -> Position:
-        return self._position
-
-    @position.setter
-    def position(self, position: Position) -> None:
-        self._position = position
-
     def take_damage(self, amount: int) -> None:
-        self._health = max(0, self._health - amount)
+        """Reduce the player's health by the specified amount."""
+        # End game logic here?
+        if amount < 0:
+            return
+        self._health -= amount
+        if self._health < 0:
+            self._health = 0
 
     def heal(self, amount: int) -> None:
+        """Increase the players health by the specified amount."""
+        if amount < 0:
+            return
         self._health += amount
+        if self._health > self._max_health:
+            self._health = self._max_health
 
-    def use_item(self, item: IItem) -> None | int:
+    def get_attack_power(self) -> int:
+        """Get the player's total attack power including item bonuses."""
+        bonus = sum(item.attack_bonus for item in self._inventory if hasattr(item, 'attack_bonus'))
+        return self._attack_power + bonus
+
+    def has_totem(self) -> bool:
+        """Check if the player possesses the evil totem."""
+        return self._has_totem
+
+    def get_position(self) -> Position:
+        """Get the player's current position on the game board."""
+        return self._position
+
+    def set_position(self, position: Position) -> None:
+        """Move the player to a new position on the game board."""
+        self._position = position
+
+    def use_item(self, item: IItem) -> None:
+        """Use an item from the player's inventory."""
         if item in self._inventory:
-            if item.type.value == 1:
+            if isinstance(item, ConsumableItem):
                 self.heal(item.heal_amount)
-            elif item.type.value == 0:
-                return self.attack_power + item.attack_bonus
 
-            if item.uses_remaining == 0:
-                self._inventory.remove(item)
+            should_discard = item.use()
+            if should_discard:
+                self.remove_item_from_inventory(item)
+
+    def get_inventory(self) -> list[IItem]:
+        """Get a copy of the player's current inventory."""
+        return self._inventory.copy()
 
     def add_item_to_inventory(self, item: IItem) -> None:
-        if len(self._inventory) < 2:
+        """Add an item to the player's inventory if there is space."""
+        if len(self._inventory) < self._inventory_limit:
             self._inventory.append(item)
+        else:
+            print("Inventory is full!")
 
     def remove_item_from_inventory(self, item: IItem) -> None:
+        """Remove an item from the player's inventory."""
         if item in self._inventory:
             self._inventory.remove(item)
 
-    def combine_items_from_inventory(self):
-        if len(self._inventory) == 2:
-            item_a, item_b = self._inventory[0], self._inventory[1]
-            try:
-                kill_all_zombies = combine_items(item_a, item_b)
+    def combine_items_from_inventory(self) -> bool:
+        """Attempt to combine compatible items in the inventory."""
+        # combine should also return combined item to add to inventory
+        if len(self._inventory) < 2:
+            return False
 
-                # Remove items with 0 uses_remaining
-                items_to_remove: list[IItem] = []
-                if item_a.uses_remaining == 0:
-                    items_to_remove.append(item_a)
-                if item_b.uses_remaining == 0:
-                    items_to_remove.append(item_b)
+        for i in range(len(self._inventory)):
+            for j in range(i + 1, len(self._inventory)):
+                item1 = self._inventory[i]
+                item2 = self._inventory[j]
 
-                for item in items_to_remove:
-                    self._inventory.remove(item)
-
-                return kill_all_zombies
-            except AssertionError:
-                return False
-
+                try:
+                    result = self._combination_engine.combine(item1, item2)
+                    if result:
+                        for item in result.items_consumed:
+                            self.remove_item_from_inventory(item)
+                        return True
+                except ValueError:
+                    continue
         return False
+
+    def set_has_totem(self, has_totem: bool) -> None:
+        """Set the player's totem status."""
+        self._has_totem = has_totem

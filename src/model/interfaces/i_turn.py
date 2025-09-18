@@ -1,8 +1,16 @@
+"""Interface definition for turn management in Zombie in My Pocket.
+
+This module defines the abstract base class for managing individual game turns,
+including turn flow control and input handling.
+"""
+
 from abc import ABC, abstractmethod
 
 class ITurn(ABC):
-    """
-    manages a game turn.
+    """Abstract interface for managing game turns.
+    
+    Handles the flow of a single turn including initialization, execution,
+    and coordination between game components and user interface.
     """
 
     # @classmethod

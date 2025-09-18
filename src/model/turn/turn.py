@@ -1,5 +1,6 @@
 from typing import Callable, Any
 
+from src.model.game_time.game_time import GameTime
 from src.model.interfaces import ITurn
 from src.model.turn.turn_enums import ServiceNames, StateNames, Triggers
 from src.model.turn.turn_flow import TurnFlow
@@ -9,17 +10,27 @@ from src.model.turn.turn_states import *
 
 class Turn(ITurn):
     """
-    Facade for managing a game turn.
+    Controls the flow of a turn from start to finish by calling on other
+    components in order to progress the turn.
 
-    Provides a simplified interface for starting, ending,
-    and progressing turns, as well as checking input state.
+    Responsibilities:
+        Coordinate with other components to advance the turn
+        Calls for input from the user in some cases
+
+    Limitations:
+        Does not decide win/loss conditions.
+        Does not decide whether the turn should continue after each step.
+            These decisions should be handled by other components.
+        Returns control frequently to allow higher-level checks.
     """
     def __init__(self, flow):
         self._flow: TurnFlow = flow
 
     #make the turn flow object
     @classmethod
-    def create(cls, the_game_pieces, the_player, the_user_interface):
+    def create(
+            cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
+    ) -> ITurn:
         """
         Create and initialize a new turn.
 
@@ -27,6 +38,7 @@ class Turn(ITurn):
             the_game_pieces: The game pieces involved in the turn.
             the_player: The player object.
             the_user_interface: The user interface to handle input/output.
+            the_game_time: The game time, optional for compatibility only.
 
         Returns:
             Turn: An initialized Turn instance with its turn flow set up.
@@ -34,7 +46,9 @@ class Turn(ITurn):
         services = cls._get_services(
             the_game_pieces,
             the_player,
-            the_user_interface)
+            the_user_interface,
+            the_game_time
+        )
 
         states = cls._get_turn_states()
 
@@ -53,14 +67,15 @@ class Turn(ITurn):
             cls,
             the_game_pieces,
             the_player,
-            the_ui
+            the_ui,
+            the_game_time
     ) -> dict[ServiceNames, object]:
         """Get the services used by the turn"""
         return {
             ServiceNames.GAME_PIECES:   the_game_pieces,
             ServiceNames.PLAYER:        the_player,
             ServiceNames.UI:            the_ui,
-
+            ServiceNames.GAME_TIME:     the_game_time
         }
 
     @classmethod
@@ -86,23 +101,23 @@ class Turn(ITurn):
         """Get the transitions used by the turn"""
         return {
             # Trigger,                       #Next State
-            Triggers.READY:             StateNames.READY,
+            Triggers.READY:                 StateNames.READY,
 
-            Triggers.START_TURN:        StateNames.GET_PLAYER_TILE,
-            Triggers.SELECT_EXIT:       StateNames.SELECT_EXIT,
+            Triggers.START_TURN:            StateNames.GET_PLAYER_TILE,
+            Triggers.SELECT_EXIT:           StateNames.SELECT_EXIT,
 
-            Triggers.DRAW_TILE:         StateNames.DRAW_TILE,
-            Triggers.MOVE_PLAYER:       StateNames.MOVE_PLAYER,
+            Triggers.DRAW_TILE:             StateNames.DRAW_TILE,
+            Triggers.MOVE_PLAYER:           StateNames.MOVE_PLAYER,
 
-            Triggers.NEW_TILE_EXIT:     StateNames.PLACE_TILE,
-            Triggers.PLAYER_TILE_EXIT:  StateNames.CHECK_NEXT_TILE,
+            Triggers.NEW_TILE_EXIT:         StateNames.PLACE_TILE,
+            Triggers.PLAYER_TILE_EXIT:      StateNames.CHECK_NEXT_TILE,
 
-            #Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
-            # ToDo update back to dev_encounters
-            Triggers.START_ENCOUNTERS: StateNames.GET_COWER_ENCOUNTER,
+            Triggers.START_ENCOUNTERS:      StateNames.GET_DEV_ENCOUNTER,
 
             Triggers.RUN_ENCOUNTER:         StateNames.RUN_ENCOUNTER,
-            Triggers.DEV_ENCOUNTER_END:     StateNames.GET_TILE_ENCOUNTER,
+
+            Triggers.DEV_ENCOUNTER_END:     StateNames.GET_PLAYER_TILE,
+            Triggers.START_TILE_ENCOUNTER:  StateNames.GET_TILE_ENCOUNTER,
             Triggers.TILE_ENCOUNTER_END:    StateNames.GET_COWER_ENCOUNTER,
             Triggers.COWER_ENCOUNTER_END:   StateNames.READY,
 
@@ -115,7 +130,7 @@ class Turn(ITurn):
 
         Sets the current state of the turn to `Ready` and begins the turn flow.
         """
-        self._flow.start()
+        self._flow.start_turn()
 
     def end_turn(self) -> None:
         """
@@ -124,7 +139,7 @@ class Turn(ITurn):
         Stops the turn flow and resets relevant values.
         `start_turn` must be called before running a new turn.
         """
-        self._flow.end()
+        self._flow.end_turn()
 
     def continue_turn(self) -> None:
         """
@@ -138,7 +153,7 @@ class Turn(ITurn):
         """
         if self._flow.is_waiting_for_callback():
             raise RuntimeError("Cannot continue turn while waiting for input.")
-        self._flow.handle_request()
+        self._flow.continue_turn()
 
     def is_waiting_for_callback(self) -> bool:
         """
