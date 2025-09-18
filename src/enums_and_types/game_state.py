@@ -1,3 +1,4 @@
+# Arsenie: State (From game components branch)
 from enum import Enum, auto
 
 # class GameState(Enum):
@@ -15,3 +16,6 @@ class GameState(Enum):
     PAUSED = "paused"
     GAME_OVER = "game_over"
     VICTORY = "victory"
+from enum import Enum, auto
+
+
