@@ -2,7 +2,7 @@
 from unittest.mock import Mock
 from enum import Enum
 from ...src.enums_and_types.game_message import MessageType
-from ...src.model.get_game_message.game_message_getter import GameMessageGetter
+from ...src.model.game_message_getter.game_message_getter import GameMessageGetter
 from ...src.enums_and_types.game_message import GameStateMessage, GameSetupMessage, AlertMessage, GameOverMessage,GameInstruction
 
 class GameCode(Enum):

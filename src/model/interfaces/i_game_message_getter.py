@@ -1,5 +1,5 @@
 # Arsenie: [2] Component for User Story 9 - Status/Notifications/Alerts/Stats
-# Used by get_game_message
+# Used by game_message_getter
 
 from abc import ABC, abstractmethod
 from enum import Enum
