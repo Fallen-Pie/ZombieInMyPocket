@@ -47,8 +47,6 @@ class AlertMessage(Enum):
     INVALID_DOOR_EXIT_SELECTED = "You can't enter from this side. There's no door here."
     INVALID_GRASS_PATH_SELECTED = "You can't enter from this side. Hedges block your path."
 
-class UnknownErrorMessage(Enum):
+class ErrorMessage(Enum):
     """Codes for system errors in the game."""
     UnknownStatusError = "Unknown system error!"
-
-

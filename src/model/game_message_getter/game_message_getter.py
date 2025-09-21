@@ -1,4 +1,4 @@
-from enums_and_types.game_message import MessageType
+from ...enums_and_types.game_message import MessageType
 from ..interfaces.i_game_message_getter import IMessageHandler
 from enum import Enum
 
