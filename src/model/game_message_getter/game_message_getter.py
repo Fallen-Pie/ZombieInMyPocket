@@ -17,10 +17,21 @@ class GameMessageGetter(IMessageHandler):
     def post_message(self, msg_type: MessageType, code: Enum, *args) -> None:
         """Publish a formatted message based on type and enum code."""
         template = code.value
+
+        exception_map = {
+            IndexError: "not enough positional arguments",
+            KeyError: "missing named argument",
+            ValueError: "invalid format string",
+            AttributeError: "template is not a string",
+        }
+
         try:
             message = template.format(*args)
-        except Exception:
-            message = f"[Formatting error for {code}]"
+
+        except tuple(exception_map.keys()) as e:
+            msg = f"Formatting error for {code.name}: {exception_map[type(e)]}. {e}"
+            raise TypeError(msg) if isinstance(e, AttributeError) else ValueError(msg) from e
+
         self._messages[msg_type].append(message)
 
     def get_messages(self, msg_type: MessageType | None = None) -> list[str]:
