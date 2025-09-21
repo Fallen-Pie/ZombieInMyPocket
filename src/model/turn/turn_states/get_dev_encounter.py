@@ -10,22 +10,7 @@ class GetDevEncounter(State):
     def enter(self):
         self.trigger = Triggers.RUN_ENCOUNTER
 
-    
-    def _get_dev_card(self):
-        return self.use_service(
-            ServiceNames.GAME_PIECES,
-            ServiceMethods.DRAW_DEV_CARD
-        )
 
-    @staticmethod
-    def _get_dev_encounter(dev_card):
-        dev_card.get_encounter(9) #todo use game time
-        # return self.use_service(
-        #     ServiceNames.GAME_PIECES,
-        #     ServiceMethods.GET_ENCOUNTER,
-        #     dev_card=dev_card
-        # )
-    
     def handle_request(self):
         the_dev_card = self._get_dev_card()
         self.result = (
@@ -37,5 +22,23 @@ class GetDevEncounter(State):
 
     def exit(self):
         super().exit()
+
     
+    def _get_dev_card(self):
+        """Draws a dev card if any remaining"""
+        return self.use_service(
+            ServiceNames.GAME_PIECES,
+            ServiceMethods.DRAW_DEV_CARD
+        )
+
+    def _get_game_time(self):
+        return self.use_service(
+            ServiceNames.GAME_TIME,
+            ServiceMethods.GET_CURRENT_TIME
+        )
+
+    def _get_dev_encounter(self, the_dev_card):
+        the_time = self._get_game_time()
+        return the_dev_card.get_encounter(the_time)
+
     

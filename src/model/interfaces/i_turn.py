@@ -1,25 +1,33 @@
+"""Interface definition for turn management in Zombie in My Pocket.
+
+This module defines the abstract base class for managing individual game turns,
+including turn flow control and input handling.
+"""
+
 from abc import ABC, abstractmethod
 
 class ITurn(ABC):
-    """
-    manages a game turn.
+    """Abstract interface for managing game turns.
+    
+    Handles the flow of a single turn including initialization, execution,
+    and coordination between game components and user interface.
     """
 
-    # @classmethod
-    # @abstractmethod
-    # def create(cls, the_game_pieces, the_player, the_user_interface):
-    #     """
-    #     Create and initialize a new turn.
-    #
-    #     Args:
-    #         the_game_pieces: The game pieces involved in the turn.
-    #         the_player: The player object.
-    #         the_user_interface: The user interface to handle input/output.
-    #
-    #     Returns:
-    #         Turn: An initialized Turn instance with its turn flow set up.
-    #     """
-    #     pass
+    @classmethod
+    @abstractmethod
+    def create(cls, the_game_pieces, the_player, the_user_interface):
+        """
+        Create and initialize a new turn.
+
+        Args:
+            the_game_pieces: The game pieces involved in the turn.
+            the_player: The player object.
+            the_user_interface: The user interface to handle input/output.
+
+        Returns:
+            Turn: An initialized Turn instance with its turn flow set up.
+        """
+        pass
 
     @abstractmethod
     def start_turn(self) -> None:
@@ -53,7 +61,7 @@ class ITurn(ABC):
         """
 
     @abstractmethod
-    def is_waiting_for_callback(self) -> bool:
+    def is_wait_for_input(self) -> bool:
         """
         Check if the turn is currently waiting for user input.
 

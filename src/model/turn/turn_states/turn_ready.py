@@ -22,7 +22,7 @@ class Ready(State):
 
     def handle_request(self):
         """Wait before starting a new turn"""
-        #print(f'{'-'*10}starting a new turn{'-'*10}')
+        print(f'{'-'*10}starting a new turn{'-'*10}')
         super().handle_request()
 
 

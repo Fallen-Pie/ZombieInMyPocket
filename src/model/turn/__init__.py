@@ -7,7 +7,7 @@ __all__ = [
 ]
 
 if os.getenv("RUNNING_TURN_TESTS") == "1":
-    #running tests for the turn packages only
+    #running test for the turn packages only
     #set environment variable to "RUNNING_TURN_TESTS=1"
 
     from .turn_flow import TurnFlow

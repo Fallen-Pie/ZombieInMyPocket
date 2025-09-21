@@ -35,7 +35,3 @@ Think of it like a mini horror movie where you're the hero trying to save the da
 
 
 ---
-
-# Arsenie's components
-- Get Status - Component 1
-- Game Manager - Component 2
