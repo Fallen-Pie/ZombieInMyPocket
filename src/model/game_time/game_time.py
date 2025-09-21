@@ -1,3 +1,5 @@
+
+
 class GameTime:
     """Keeps track of game time"""
     _AM = 'AM'
