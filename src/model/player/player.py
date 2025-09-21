@@ -1,12 +1,9 @@
 
-from ...model.interfaces.i_player import IPlayer
-from ...model.interfaces.i_item import IItem
-from ..interfaces.i_player import IPlayer
-from ..interfaces.i_item import IItem
-from ..item.item_helper import combine_items
-from ...enums_and_types.types import Position
-from ...model.item.base_item import ConsumableItem
-from ...model.item.combination_engine import CombinationEngine
+from src.model.interfaces.i_player import IPlayer
+from src.model.interfaces.i_item import IItem
+from src.enums_and_types.types import Position
+from src.model.item.base_item import ConsumableItem
+from src.model.item.combination_engine import CombinationEngine
 
 class Player(IPlayer):
     """Player iteration-two implementation."""
@@ -64,7 +61,7 @@ class Player(IPlayer):
         if item in self._inventory:
             if isinstance(item, ConsumableItem):
                 self.heal(item.heal_amount)
-
+            
             should_discard = item.use()
             if should_discard:
                 self.remove_item_from_inventory(item)

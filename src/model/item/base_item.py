@@ -5,13 +5,13 @@ and provide common functionality for different types of items in the game.
 """
 
 from typing import Optional
-from ...enums_and_types import ItemName, ItemType
+from src.enums_and_types import ItemName, ItemType
 from ..interfaces import IItem
 
 
 class BaseItem(IItem):
     """Base implementation of a game item.
-
+    
     Provides common functionality for all items including name, description,
     type, combat bonuses, healing amounts, and usage tracking.
     """
@@ -20,7 +20,7 @@ class BaseItem(IItem):
                  uses: int = 1,
                  combinable_with: Optional[list[ItemName]] = None) -> None:
         """Initialize a base item.
-
+        
         Args:
             name: The unique identifier for this item
             description: Human-readable description of the item
@@ -76,7 +76,7 @@ class BaseItem(IItem):
 
     def use(self) -> bool:
         """Use the item, decrementing its remaining uses.
-
+        
         Returns:
             True if the item is fully consumed after use, False otherwise
         """
@@ -89,14 +89,14 @@ class BaseItem(IItem):
 
 class ConsumableItem(BaseItem):
     """An item that can be consumed for healing effects.
-
+    
     Consumable items are single-use items that restore health points.
     """
     def __init__(self, name: ItemName, description: str, item_type: ItemType,
                  heal_amount: int = 0,
                  combinable_with: Optional[list[ItemName]] = None) -> None:
         """Initialize a consumable item.
-
+        
         Args:
             name: The unique identifier for this item
             description: Human-readable description of the item
@@ -111,7 +111,7 @@ class ConsumableItem(BaseItem):
 
 class WeaponItem(BaseItem):
     """An item that provides combat bonuses.
-
+    
     Weapon items increase the player's attack score and typically have
     multiple uses before being consumed.
     """
@@ -119,7 +119,7 @@ class WeaponItem(BaseItem):
                  uses: int = 99,
                  combinable_with: Optional[list[ItemName]] = None) -> None:
         """Initialize a weapon item.
-
+        
         Args:
             name: The unique identifier for this item
             description: Human-readable description of the item
@@ -134,14 +134,14 @@ class WeaponItem(BaseItem):
 
 class CombinableItem(BaseItem):
     """An item that exists primarily to be combined with other items.
-
+    
     These items have limited functionality on their own but can create
     powerful effects when combined with compatible items.
     """
     def __init__(self, name: ItemName, description: str, item_type: ItemType,
                  combinable_with: list[ItemName]) -> None:
         """Initialize a combinable item.
-
+        
         Args:
             name: The unique identifier for this item
             description: Human-readable description of the item
@@ -154,13 +154,13 @@ class CombinableItem(BaseItem):
 
 class SpecialWeaponItem(WeaponItem):
     """A weapon item with special capabilities like refuelable uses.
-
+    
     Special weapons can have their uses replenished through combinations
     with other items, unlike regular weapons.
     """
     def add_uses(self, amount: int) -> None:
         """Add additional uses to this special weapon.
-
+        
         Args:
             amount: Number of uses to add
         """

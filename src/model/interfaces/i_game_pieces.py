@@ -7,8 +7,8 @@ components including development cards, tiles, and board placement logic.
 from abc import ABC, abstractmethod
 from .i_dev_card import IDevCard
 from .i_tile import ITile
-from ...enums_and_types.types import Position
-from ...enums_and_types.direction import Direction #Added my Alex L
+from src.enums_and_types.types import Position
+from src.enums_and_types.enums import Direction #Added my Alex L
 
 
 class IGamePieces(ABC):

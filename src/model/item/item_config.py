@@ -7,13 +7,13 @@ and combination rules.
 
 from dataclasses import dataclass
 from typing import Optional
-from ...enums_and_types import ItemName, ItemType
+from src.enums_and_types import ItemName, ItemType
 
 
 @dataclass
 class ItemConfig:
     """Configuration data for a game item.
-
+    
     Attributes:
         name: Unique identifier for the item
         description: Human-readable description of the item's effects

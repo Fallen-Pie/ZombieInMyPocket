@@ -1,6 +1,4 @@
-def begin_game():
-    print("Game has begun")
-
-
 class GameController:
-    pass
+
+    def begin_game(self):
+        print("Game has begun")
