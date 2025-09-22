@@ -2,13 +2,22 @@
 # Used by game_session_manager
 
 from abc import abstractmethod, ABC
-
-from ...enums_and_types import GameState
+from ...enums_and_types.game_state import GameState
 
 class IGameStateManager(ABC):
     """Interface for win/loss outcomes. Also known as IWinLossHandler"""
     @abstractmethod
     def set_current_state(self) -> GameState:
+        pass
+
+    @abstractmethod
+    def setup_game(self):
+        """Starts game to start state for new game play"""
+        pass
+
+    @abstractmethod
+    def pause_game(self):
+        """stops all player actions and locks game interactions (e.g. drawing dev cards, moving through tiles, picking items)"""
         pass
 
     @abstractmethod

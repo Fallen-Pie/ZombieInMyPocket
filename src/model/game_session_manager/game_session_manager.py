@@ -4,11 +4,10 @@ This module contains the Game Session Manager class and its implementation, hand
 """
 from ..interfaces.i_game_status import IGameStatus
 from ...enums_and_types.game_state import GameState
-from ...enums_and_types.game_over_condition import GameOverConditions
-from ...enums_and_types.message_code import MessageCode
+from ...enums_and_types.game_over_reason import GameOverReason
+from ...enums_and_types.enums import GameOverConditions, MessageCode
 
 # from src.enums_and_types.enums import GameState
-
 
 class GameSessionManager:
     """ Game Session Manager
@@ -25,7 +24,6 @@ class GameSessionManager:
         self.room = "Foyer"  # TODO: replace with actual method/interface that get these values
 
         self._status = status
-        self._state = GameState.INIT
 
     def set_current_state(self, state:GameState):
         """ Event-driven command that updates game states"""
@@ -34,15 +32,10 @@ class GameSessionManager:
         self._current_state = state
 
     @property
-    def state(self) -> GameState:
-        """ []
-    def get_current_state(self):
+    def get_current_state(self)-> GameState:
+        """ """
         return self._current_state
 
-        Args:
-            []
-        """
-        return self._state
     def setup_game(self):
         """ Handles game states and set up. """
         # set_current_state
@@ -58,60 +51,60 @@ class GameSessionManager:
         Args:
             []        
         """
-        if self._state == GameState.INIT:
+        if self._current_state == GameState.INIT:
             self._status.reset()
-            self._state = GameState.EXPLORING
-            self._status.post_message(MessageCode.WELCOME)
+            self._current_state = GameState.EXPLORING
+            # self._status.post_message(MessageCode.WELCOME)
 
-    def pause(self) -> None:
+    def pause_game(self) -> None:
         """ []
 
         Args:
             []
         """
-        if self._state == GameState.EXPLORING:
-            self._state = GameState.PAUSED
-            self._status.post_message(MessageCode.TIME_WARNING)
+        if self._current_state == GameState.EXPLORING:
+            self._current_state = GameState.PAUSED
+            # self._status.post_message(MessageCode.TIME_WARNING)
 
 
     def reset_game(self):
-        """Resets game values"""
-        # TODO: handle clear_tiles
+        """Completely reset the session & game values back to init state.
+
+        Args:
+        []
+        """
         self.health = 6
         self.attack = 1
         self.room = "Foyer"
+        self._status.reset()
         self._current_state = GameState.INIT
 
-    def resume(self) -> None:
+    def resume_game(self) -> None:
         """ []
 
         Args:
             []
         """
-        if self._state == GameState.PAUSED:
-            self._state = GameState.EXPLORING
-            self._status.post_message(MessageCode.ROOM_CHANGED, "Resumed exploring")
+        if self._current_state == GameState.PAUSED:
+            self._current_state = GameState.EXPLORING
+            # self._status.post_message(MessageCode.ROOM_CHANGED, "Resumed exploring")
 
-    def reset(self) -> None:
-        """Completely reset the session back to init state.
-
-        Args:
-            []
-        """
-        self._status.reset()
-        self._state = GameState.INIT
-
-    def end_game(self, condition: GameOverConditions) -> None:
+    def end_game(self, reason: GameOverConditions) -> None:
         """End the game with a win/loss condition. Handles stopping game operations.
         Args:
             []
         """
-        self._state = GameState.GAME_OVER
-        self._status.trigger_game_over(condition)
-        # You can add a message here too if needed:
-        if condition == GameOverConditions.LOSE_PLAYER_DIED:
+        self._current_state = GameState.GAME_OVER
+        self._status.trigger_game_over(reason)
+        # LOSE: player died, health level run low
+        if reason == reason.LOSE_PLAYER_DIED:
             self._status.post_message(MessageCode.LOW_HEALTH_WARNING)
-        elif condition == GameOverConditions.LOSE_OUT_OF_TIME:
+        # LOSE: Player ran out of time
+        elif reason == GameOverConditions.LOSE_OUT_OF_TIME:
+            pass
+            # self._status.post_message(MessageCode.TIME_WARNING)
+        # WIN: BURIED_TOTEM
+        else:
             self._status.post_message(MessageCode.TIME_WARNING)
 
     def victory(self) -> None:
@@ -120,7 +113,7 @@ class GameSessionManager:
         Args:
             []
         """
-        self._state = GameState.VICTORY
+        self._current_state = GameState.VICTORY
         self._status.trigger_game_over(GameOverConditions.WIN_TOTEM_BURIED)
         self._status.post_message(MessageCode.ENTERED_EVIL_TEMPLE)
 
