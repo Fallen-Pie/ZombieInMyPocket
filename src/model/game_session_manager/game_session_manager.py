@@ -14,7 +14,7 @@ class GameSessionManager:
     Coordinates the state and the components of the game (Time, Turn, Player, and GameOver/GameStatus)
     Coordinates the state and lifecycle of the game session.
     """
-    def __init__(self, status: IGameStatus):
+    def __init__(self):
         """Initialise a new game session, game state and lifecycle of the game session. Starts game to start state for new game play
         Args:
         """
@@ -22,8 +22,6 @@ class GameSessionManager:
         self.health = 6  # TODO: replace with actual method/interface that get these values
         self.attack = 1  # TODO: replace with actual method/interface that get these values
         self.room = "Foyer"  # TODO: replace with actual method/interface that get these values
-
-        self._status = status
 
     def set_current_state(self, state:GameState):
         """ Event-driven command that updates game states"""
@@ -44,7 +42,7 @@ class GameSessionManager:
             []        
         """
         if self._current_state == GameState.INIT:
-            self._status.reset()
+            # self._status.reset()
             self._current_state = GameState.EXPLORING
             # self._status.post_message(MessageCode.WELCOME)
 
@@ -67,7 +65,7 @@ class GameSessionManager:
         self.health = 6
         self.attack = 1
         self.room = "Foyer"
-        self._status.reset()
+        # self._status.reset()
         self._current_state = GameState.INIT
 
     def resume_game(self) -> None:
@@ -79,6 +77,17 @@ class GameSessionManager:
         if self._current_state == GameState.PAUSED:
             self._current_state = GameState.EXPLORING
             # self._status.post_message(MessageCode.ROOM_CHANGED, "Resumed exploring")
+    def is_game_over(self):
+        """"""
+        pass
+
+    def undo_turn(self):
+        """Completely reset the game session & game values back to init state for new game play."""
+        pass
+
+    def redo_turn(self):
+        """Completely reset the game session & game values back to init state for new game play."""
+        pass
 
     def end_game(self, reason: GameOverConditions) -> None:
         """End the game with a win/loss condition. Handles stopping game operations.
@@ -86,17 +95,23 @@ class GameSessionManager:
             []
         """
         self._current_state = GameState.GAME_OVER
-        self._status.trigger_game_over(reason)
+        # self._status.trigger_game_over(reason)
         # LOSE: player died, health level run low
         if reason == reason.LOSE_PLAYER_DIED:
-            self._status.post_message(MessageCode.LOW_HEALTH_WARNING)
+            pass
+            # self._status.post_message(MessageCode.LOW_HEALTH_WARNING)
         # LOSE: Player ran out of time
         elif reason == GameOverConditions.LOSE_OUT_OF_TIME:
             pass
             # self._status.post_message(MessageCode.TIME_WARNING)
         # WIN: BURIED_TOTEM
         else:
-            self._status.post_message(MessageCode.TIME_WARNING)
+            # self._status.post_message(MessageCode.TIME_WARNING)
+            pass
+
+    def stop_game(self):
+        """"""
+        pass
 
     def victory(self) -> None:
         """ []
@@ -105,11 +120,15 @@ class GameSessionManager:
             []
         """
         self._current_state = GameState.VICTORY
-        self._status.trigger_game_over(GameOverConditions.WIN_TOTEM_BURIED)
-        self._status.post_message(MessageCode.ENTERED_EVIL_TEMPLE)
+        # self._status.trigger_game_over(GameOverConditions.WIN_TOTEM_BURIED)
+        # self._status.post_message(MessageCode.ENTERED_EVIL_TEMPLE)
 
     def save_game(self):
         """ Save game progress """
+        pass
+
+    def get_snapshot(self):
+        """ Return game snapshot """
         pass
 
     def load_game(self):
