@@ -4,15 +4,20 @@
 from abc import abstractmethod, ABC
 from ...enums_and_types.game_state import GameState
 
-class IGameStateManager(ABC):
-    """Interface for win/loss outcomes. Also known as IWinLossHandler"""
+class IGameSessionManager(ABC):
+    """Interface for all game states and win/loss outcomes for the session, which includes IWinLossHandler"""
     @abstractmethod
-    def set_current_state(self) -> GameState:
+    def set_current_state(self):
         pass
 
     @abstractmethod
-    def setup_game(self):
-        """Starts game to start state for new game play"""
+    def get_current_state(self) -> GameState:
+        """Gets the current state of the game."""
+        pass
+
+    @abstractmethod
+    def start_game(self):
+        """Starts a new game if not already running."""
         pass
 
     @abstractmethod
@@ -22,7 +27,17 @@ class IGameStateManager(ABC):
 
     @abstractmethod
     def reset_game(self):
-        """Resets game to start state for new game play"""
+        """Completely reset the game session & game values back to init state for new game play."""
+        pass
+
+    @abstractmethod
+    def undo_turn(self):
+        """Completely reset the game session & game values back to init state for new game play."""
+        pass
+
+    @abstractmethod
+    def redo_turn(self):
+        """Completely reset the game session & game values back to init state for new game play."""
         pass
 
     @abstractmethod

@@ -15,7 +15,7 @@ class GameSessionManager:
     Coordinates the state and lifecycle of the game session.
     """
     def __init__(self, status: IGameStatus):
-        """Initialise a new game session.
+        """Initialise a new game session, game state and lifecycle of the game session. Starts game to start state for new game play
         Args:
         """
         self._current_state = GameState.INIT
@@ -33,20 +33,12 @@ class GameSessionManager:
 
     @property
     def get_current_state(self)-> GameState:
-        """ """
+        """Gets the current state of the game."""
         return self._current_state
 
-    def setup_game(self):
-        """ Handles game states and set up. """
-        # set_current_state
-        # set_game_time
-        pass
 
     def start_game(self) -> None:
-        """Start a new game if not already running.
-    def start_game(self):
-        """"""
-        pass
+        """Starts a new game if not already running.
 
         Args:
             []        
@@ -57,7 +49,7 @@ class GameSessionManager:
             # self._status.post_message(MessageCode.WELCOME)
 
     def pause_game(self) -> None:
-        """ []
+        """stops all player actions and locks game interactions (e.g. drawing dev cards, moving through tiles, picking items)
 
         Args:
             []
@@ -66,9 +58,8 @@ class GameSessionManager:
             self._current_state = GameState.PAUSED
             # self._status.post_message(MessageCode.TIME_WARNING)
 
-
     def reset_game(self):
-        """Completely reset the session & game values back to init state.
+        """Completely reset the game session & game values back to init state for new game play.
 
         Args:
         []

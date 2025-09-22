@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 from ..encounters.encounters import IEncounter
 from .i_item import IItem
 
-
 class IDevCard(ABC):
     """Abstract interface for development cards in the game.
     

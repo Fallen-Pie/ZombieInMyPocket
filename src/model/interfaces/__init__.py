@@ -13,6 +13,7 @@ from .i_player import IPlayer
 from .i_tile import ITile
 from .i_game_over import IGameOver
 from .i_turn import ITurn
+from .i_game_session_manager import IGameSessionManager
 
 
 __all__ = [
@@ -24,4 +25,5 @@ __all__ = [
     'ITile',
     'IGameOver',
     'ITurn',
+    'IGameSessionManager'
 ]
