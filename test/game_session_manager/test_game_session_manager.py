@@ -13,7 +13,7 @@ def test_game_over_when_hp_zero():
     time = Mock(is_midnight=lambda: False)
     turn = Mock(number=1)
     totem = Mock(is_buried=False)
-    messenger = Mock()
+    # messenger = Mock()
 
     session = GameSessionManager() #player, time, turn, totem, messenger
 
