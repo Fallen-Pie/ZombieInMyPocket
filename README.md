@@ -1,6 +1,13 @@
 # ZombieInMyPocket
 BCDE321 Advance Programming - Assignment 2 (Group)
 
+# Component #2 GameMessageGetter by Arsenie Sarmiento
+## Files:
+- enums_and_types/game_message.py
+- model/game_message_getter/**/*
+- model/interfaces/i_game_message_getter.py
+-test/game_message_getter/**/*
+
 # About
 This is the source code for the python version of Zombie In My Pocket game
 

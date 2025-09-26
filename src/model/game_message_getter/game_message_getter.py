@@ -14,7 +14,7 @@ class GameMessageGetter(IMessageHandler):
             MessageType.FEEDBACK: [],
         }
 
-    def post_message(self, msg_type: MessageType, code: Enum, *args) -> None:
+    def _format_message(self, template: MessageType, code: Enum, *args) -> None:
         """Publish a formatted message based on type and enum code."""
         template = code.value
 
@@ -26,21 +26,27 @@ class GameMessageGetter(IMessageHandler):
         }
 
         try:
-            message = template.format(*args)
+            return template.format(*args)
 
         except tuple(exception_map.keys()) as e:
             msg = f"Formatting error for {code.name}: {exception_map[type(e)]}. {e}"
             raise TypeError(msg) if isinstance(e, AttributeError) else ValueError(msg) from e
 
+    def post_message(self, msg_type: MessageType, code: Enum, *args) -> None:
+        """Publish a formatted message based on type and enum code."""
+        template = code.value
+        message = self._format_message(template, code, *args)
         self._messages[msg_type].append(message)
 
     def get_messages(self, msg_type: MessageType | None = None) -> list[str]:
+        """Return a list of formatted messages based on type and enum code."""
         if msg_type:
             return list(self._messages[msg_type])
         # flatten across all types
         return [m for msgs in self._messages.values() for m in msgs]
 
     def clear_messages(self, msg_type: MessageType | None = None) -> None:
+        """Clear all messages based on type and enum code."""
         if msg_type:
             self._messages[msg_type].clear()
         else:

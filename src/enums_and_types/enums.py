@@ -24,7 +24,6 @@ class Direction(Enum):
     SOUTH = 2
     WEST = 3
 
-
 class ItemType(Enum):
     WEAPON = 0
     HEALING = 1  # Can of Soda
