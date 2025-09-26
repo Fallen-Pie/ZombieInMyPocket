@@ -1,6 +1,17 @@
 # ZombieInMyPocket
 BCDE321 Advance Programming - Assignment 2 (Group)
 
+---
+
+# Component #1: GameSessionManager by Arsenie Sarmiento
+## Files:
+- enums_and_types/game_state.py
+- model/game_session_manager/**/*
+- model/interfaces/i_game_session_manager.py
+- test/game_session_manager/**/*
+
+---
+
 # About
 This is the source code for the python version of Zombie In My Pocket game
 
