@@ -1,14 +1,15 @@
 import unittest
 from unittest.mock import Mock
 
-from src.model.game_message_getter.info_message_manager import InfoMessageManager
-from src.enums_and_types.game_message import MessageType, GameInstruction
 from src.model.interfaces.i_game_message_getter import IGameMessageGetter
 # from src.enums_and_types.direction import Direction
 # from src.model.game_pieces.tile import Tile
 # from src.model.game_time import GameTime
 # from src.model.player import Player
-#
+
+from src.model.game_message_getter.info_message_manager import InfoMessageManager
+from src.enums_and_types.game_message import MessageType, GameInstruction
+
 
 class TestInfoMessageManager(unittest.TestCase):
     def setUp(self):
@@ -75,12 +76,14 @@ class TestInfoMessageManager(unittest.TestCase):
         🟡 Scenario (Alternate Flow): Display Event Trigger Message
         •	Given the player enters a room (e.g. Garden OR Kitchen)
         •	When the player’s health incremented by 1
-        •	Then a message “+1 Health" should be displayed
-
+        •	Then a message '+1 Health' should be displayed
         """
         pass
 
     def test_show_stats_posts_all_stats(self):
+        """
+
+        """
         self.manager.show_stats()
         # Expect 4 status messages
         self.assertEqual(self.mock_msg_handler.post_message.call_count, 4)
@@ -93,7 +96,7 @@ class TestInfoMessageManager(unittest.TestCase):
         🟡 Scenario (Alternate Flow): Display Instruction for Graveyard
         •	Given the Graveyard tile is drawn
         •	When player enters the Graveyard
-        •	Then display the instruction, “Resolve a new care to bury totem.”
+        •	Then display the instruction, 'Resolve a new care to bury totem.'
         """
         self.manager.show_instructions()
         self.mock_msg_handler.post_message.assert_called_with(
@@ -110,6 +113,13 @@ class TestInfoMessageManager(unittest.TestCase):
         pass
 
     def test_show_instructions_no_instruction_for_unknown_room(self):
+        """
+        🔴 Scenario (Exception Flow) Do not display information on invalid tiles
+        •	Given the player draw a next card
+        •	When the item is obtained and collected
+        •	Then a message should be displayed to confirm the item (and what) was acquired.
+
+        """
         self.mock_player.room = "Kitchen"
         self.manager.show_instructions()
         self.mock_msg_handler.post_message.assert_not_called()
