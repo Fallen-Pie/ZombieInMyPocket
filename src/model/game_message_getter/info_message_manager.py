@@ -47,7 +47,6 @@ class InfoMessageManager:
         if instruction:
             self.msg_handler.post_message(MessageType.INSTRUCTION, instruction)
 
-
     def show_tooltip(self):
         """
         Gives key-driven instruction about item(s) in player's possession: Item name and attack score

@@ -3,11 +3,11 @@ from unittest.mock import Mock
 
 from src.model.game_message_getter.info_message_manager import InfoMessageManager
 from src.enums_and_types.game_message import MessageType, GameInstruction
+from src.model.interfaces.i_game_message_getter import IGameMessageGetter
 # from src.enums_and_types.direction import Direction
 # from src.model.game_pieces.tile import Tile
 # from src.model.game_time import GameTime
 # from src.model.player import Player
-# from src.model.interfaces.i_game_message_getter import IGameMessageGetter
 #
 
 class TestInfoMessageManager(unittest.TestCase):
@@ -36,40 +36,6 @@ class TestInfoMessageManager(unittest.TestCase):
         # Reset call history at the start of each test
         self.mock_msg_handler.reset_mock()
 
-    def test_show_stats_posts_all_stats(self):
-        self.manager.show_stats()
-        # Expect 4 status messages
-        self.assertEqual(self.mock_msg_handler.post_message.call_count, 4)
-        self.mock_msg_handler.post_message.assert_any_call(
-            MessageType.STATUS, unittest.mock.ANY
-        )
-
-    def test_show_instructions_posts_graveyard_instruction(self):
-        self.manager.show_instructions()
-        self.mock_msg_handler.post_message.assert_called_with(
-            MessageType.INSTRUCTION, GameInstruction.GRAVEYARD
-        )
-
-    def test_show_instructions_no_instruction_for_unknown_room(self):
-        self.mock_player.room = "Kitchen"
-        self.manager.show_instructions()
-        self.mock_msg_handler.post_message.assert_not_called()
-
-    def test_show_tooltip_posts_tooltips_for_items(self):
-        self.manager.show_instructions()
-        # self.manager.show_tooltip()
-        # Each item generates a tooltip
-        expected_calls: int = 1
-        self.assertEqual(self.mock_msg_handler.post_message.call_count, expected_calls)
-        self.mock_msg_handler.post_message.assert_any_call(
-            MessageType.INSTRUCTION, unittest.mock.ANY
-        )
-
-    def test_show_tooltip_no_items(self):
-        self.mock_player.items = []
-        self.manager.show_tooltip()
-        self.mock_msg_handler.post_message.assert_not_called()
-
     def test_welcome_message_start_game(self):
         """
         🟢 Scenario (Basic Flow): Display Welcome Message at the start of the game - Current Room: Foyer
@@ -90,6 +56,7 @@ class TestInfoMessageManager(unittest.TestCase):
             unittest.mock.ANY
             # Enum("Welcome", {"VAL":})
         )
+
     def test_room_change_message(self):
         """
         🟢 Scenario (Basic Flow): Update Room Change Message
@@ -102,6 +69,81 @@ class TestInfoMessageManager(unittest.TestCase):
         self.manager.show_instructions()  # Should map room to instruction if available
         # Kitchen not mapped, so no instruction should be posted
         self.mock_msg_handler.post_message.assert_not_called()
+
+    def test_show_update_in_health_score(self):
+        """
+        🟡 Scenario (Alternate Flow): Display Event Trigger Message
+        •	Given the player enters a room (e.g. Garden OR Kitchen)
+        •	When the player’s health incremented by 1
+        •	Then a message “+1 Health" should be displayed
+
+        """
+        pass
+
+    def test_show_stats_posts_all_stats(self):
+        self.manager.show_stats()
+        # Expect 4 status messages
+        self.assertEqual(self.mock_msg_handler.post_message.call_count, 4)
+        self.mock_msg_handler.post_message.assert_any_call(
+            MessageType.STATUS, unittest.mock.ANY
+        )
+
+    def test_show_instructions_posts_graveyard(self):
+        """
+        🟡 Scenario (Alternate Flow): Display Instruction for Graveyard
+        •	Given the Graveyard tile is drawn
+        •	When player enters the Graveyard
+        •	Then display the instruction, “Resolve a new care to bury totem.”
+        """
+        self.manager.show_instructions()
+        self.mock_msg_handler.post_message.assert_called_with(
+            MessageType.INSTRUCTION, GameInstruction.GRAVEYARD
+        )
+
+    def test_show_instructions_posts_evil_temple(self):
+        """
+        🟡 Scenario (Alternate Flow) Display Instruction for Evil Temple
+        •	Given the Evil Temple tile is drawn
+        •	When player enters the Evil Temple room
+        •	Then display the instruction, 'Resolve a new care to find totem.'
+        """
+        pass
+
+    def test_show_instructions_no_instruction_for_unknown_room(self):
+        self.mock_player.room = "Kitchen"
+        self.manager.show_instructions()
+        self.mock_msg_handler.post_message.assert_not_called()
+
+    def test_show_tooltip_posts_tooltips_for_items(self):
+        """
+        🟡 Scenario (Alternate Flow) Display information that player acquired an item
+        •	Given the player draw a next card
+        •	When the item is obtained and collected
+        •	Then a message should be displayed to confirm the item (and what) was acquired.
+        """
+        self.manager.show_instructions()
+        # self.manager.show_tooltip()
+        # Each item generates a tooltip
+        expected_calls: int = 1
+        self.assertEqual(self.mock_msg_handler.post_message.call_count, expected_calls)
+        self.mock_msg_handler.post_message.assert_any_call(
+            MessageType.INSTRUCTION, unittest.mock.ANY
+        )
+
+    def test_show_tooltip_posts_storage_room(self):
+        """
+        🟡 Scenario (Alternate Flow) Display Tool Tip on Storage Room to draw another card
+        •	Given the player is in Storage Room
+        •	When the player finishes drawing a Dev Card
+        •	Then display a prompt to inform user that they can opt to draw a second Dev Card: 'You may draw a new card for a chance to acquire an item.'
+        """
+        pass
+
+    def test_show_tooltip_no_items(self):
+        self.mock_player.items = []
+        self.manager.show_tooltip()
+        self.mock_msg_handler.post_message.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
