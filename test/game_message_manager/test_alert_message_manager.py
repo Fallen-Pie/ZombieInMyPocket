@@ -34,5 +34,10 @@ class TestAlertMessageManager(unittest.TestCase):
         """
         pass
 
+    def test_invalid_move(self):
+        """
+        """
+        pass
+
 if __name__ == '__main__':
     unittest.main()

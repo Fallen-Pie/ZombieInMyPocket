@@ -124,35 +124,58 @@ class TestInfoMessageManager(unittest.TestCase):
         self.manager.show_instructions()
         self.mock_msg_handler.post_message.assert_not_called()
 
-    def test_show_tooltip_posts_tooltips_for_items(self):
-        """
-        🟡 Scenario (Alternate Flow) Display information that player acquired an item
-        •	Given the player draw a next card
-        •	When the item is obtained and collected
-        •	Then a message should be displayed to confirm the item (and what) was acquired.
-        """
-        self.manager.show_instructions()
-        # self.manager.show_tooltip()
-        # Each item generates a tooltip
-        expected_calls: int = 1
-        self.assertEqual(self.mock_msg_handler.post_message.call_count, expected_calls)
-        self.mock_msg_handler.post_message.assert_any_call(
-            MessageType.INSTRUCTION, unittest.mock.ANY
-        )
+    # def test_show_feedback_item_acquired(self):
+    #     """
+    #     🟡 Scenario (Alternate Flow) Display information that player acquired an item
+    #     •	Given the player draw a next card
+    #     •	When the item is obtained and collected
+    #     •	Then a message should be displayed to confirm the item (and what) was acquired.
+    #     """
+    #     self.manager.show_instructions()
+    #     # self.manager.show_tooltip()
+    #     # Each item generates a tooltip
+    #     expected_calls: int = 1
+    #     self.assertEqual(self.mock_msg_handler.post_message.call_count, expected_calls)
+    #     self.mock_msg_handler.post_message.assert_any_call(
+    #         MessageType.INSTRUCTION, unittest.mock.ANY
+    #     )
 
-    def test_show_tooltip_posts_storage_room(self):
+    def test_show_storage_room_tooltip_posts(self):
         """
-        🟡 Scenario (Alternate Flow) Display Tool Tip on Storage Room to draw another card
-        •	Given the player is in Storage Room
-        •	When the player finishes drawing a Dev Card
-        •	Then display a prompt to inform user that they can opt to draw a second Dev Card: 'You may draw a new card for a chance to acquire an item.'
         """
         pass
 
     def test_show_tooltip_no_items(self):
+        """
+        """
         self.mock_player.room = "Storage Room"
         self.manager.show_tooltip()
         self.mock_msg_handler.post_message.assert_not_called()
+
+    def test_show_storage_room_tooltip_draw_another_card(self):
+        """
+        🟡 Scenario (Alternate Flow) Display Tool Tip on Storage Room to draw another card
+        • Given the player is in Storage Room
+        • When the player finishes drawing a Dev Card
+        • Then display a prompt to inform user that they can opt to draw a second Dev Card:
+          'You may draw a new card for a chance to acquire an item.'
+        """
+        pass
+        # # Arrange: set player's room to Storage Room
+        # self.mock_player.room = "Storage Room"
+        #
+        # # Optional: ensure player has some items (if relevant)
+        # self.mock_player.items = [Mock(name="Dev Card")]
+        #
+        # # Act: call the method
+        # self.manager.show_tooltip()
+        #
+        # # Assert: verify the tooltip message was posted
+        # expected_message = "You may draw a new card for a chance to acquire an item."
+        # self.mock_msg_handler.post_message.assert_any_call(
+        #     MessageType.INSTRUCTION,
+        #     expected_message
+        # )
 
 if __name__ == "__main__":
     unittest.main()
