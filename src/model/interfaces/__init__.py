@@ -14,6 +14,7 @@ from .i_player import IPlayer
 # 🔴 Added
 from .i_encounter import IEncounter
 from .i_turn import ITurn
+from .i_game_message_manager import IGameMessageManager
 
 
 __all__ = [
@@ -25,5 +26,6 @@ __all__ = [
     'IPlayer',
 # 🔴 Added
     'IEncounter',
-    'ITurn'
+    'ITurn',
+    'IGameMessageManager'
 ]

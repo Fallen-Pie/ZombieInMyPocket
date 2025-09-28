@@ -1,3 +1,5 @@
+from typing import Any
+
 from ...enums_and_types.game_message import MessageType
 from ..interfaces.i_game_message_manager import IGameMessageManager
 from enum import Enum
@@ -15,26 +17,26 @@ class GameMessageManager(IGameMessageManager):
             MessageType.TOOLTIP: [],
             MessageType.STATISTICS: [],
         }
-    @staticmethod
-    def _format(code: Enum, *args) -> str:
-        """Publish a formatted message based on type and enum code.
-        :rtype: str
-        """
-        template = code.value
+    # @staticmethod
+    # def _format(code: Enum, *args) -> str:
+    #     """Publish a formatted message based on type and enum code.
+    #     :rtype: str
+    #     """
+    #     template = code.value
+    #
+    #     exception_map = {
+    #         IndexError: "not enough positional arguments",
+    #         KeyError: "missing named argument",
+    #         ValueError: "invalid format string",
+    #         AttributeError: "template is not a string",
+    #     }
+    #
+    #     try:
+    #         return code.value.format(*args)
+    #     except tuple(exception_map.keys()) as e:
+    #         raise ValueError(f"Formatting error for {code.name}: {e}")
 
-        exception_map = {
-            IndexError: "not enough positional arguments",
-            KeyError: "missing named argument",
-            ValueError: "invalid format string",
-            AttributeError: "template is not a string",
-        }
-
-        try:
-            return code.value.format(*args)
-        except tuple(exception_map.keys()) as e:
-            raise ValueError(f"Formatting error for {code.name}: {e}")
-
-    def post_message(self, msg_type: MessageType, code: Enum, *args) -> None:
+    def post_message(self, msg_type: MessageType, code: Enum, *args: Any) -> str:
         """Post a new message, formatted from the enum code + args.
 
         Args:
@@ -42,9 +44,19 @@ class GameMessageManager(IGameMessageManager):
             code (Enum): The code of the message.
             *args: Arguments to be injected into the message template.
         """
+        return msg_type.value.format(*args)
 
-        message = self._format(code, *args)
-        self._messages[msg_type].append(message)
+        # try:
+        #     formatted_code_msg = code.value.format(*args)
+        # except (IndexError, KeyError):
+        #     formatted_code_msg = code.value
+        #
+        # try:
+        #     final_msg = msg_type.value.format(formatted_code_msg, *args)
+        # except (IndexError, KeyError):
+        #     final_msg = msg_type.value.format(*args)
+        #
+        # return final_msg
 
     def get_messages(self, msg_type: MessageType | None = None) -> list[str]:
         """Return a list of formatted messages based on type and enum code."""

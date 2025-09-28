@@ -2,16 +2,18 @@ import unittest
 from unittest.mock import Mock
 
 from src.model.game_message_manager.game_feedback_manager import GameFeedbackManager
-from src.enums_and_types.game_message import MessageType, EventMessage, GameStateMessage, GameOverMessage
+from src.enums_and_types.game_message import MessageType, GameFeedbackMessage, GameOverMessage, GameSetupMessage
 
 class TestGameFeedbackManager(unittest.TestCase):
     def setUp(self):
         """ Mocking dependencies"""
         self.mock_msg_handler = Mock()
         self.mock_player = Mock()
+        self.tile = Mock()
 
         self.manager = GameFeedbackManager(
             msg_handler=self.mock_msg_handler,
+            tile=self.tile
         )
         # Reset call history at the start of each test
         self.mock_msg_handler.reset_mock()
@@ -20,28 +22,28 @@ class TestGameFeedbackManager(unittest.TestCase):
         desc = "Player entered new phase"
         self.manager.on_game_state_change(desc)
         self.mock_msg_handler.post_message.assert_called_once_with(
-            MessageType.FEEDBACK, EventMessage.GAME_STATE, desc
+            MessageType.FEEDBACK, MessageType.STATUS, desc
         )
 
     def test_on_time_change_posts_feedback(self):
         new_time = 45
         self.manager.on_time_change(new_time)
         self.mock_msg_handler.post_message.assert_called_once_with(
-            MessageType.FEEDBACK, GameStateMessage.TIME_CHANGE, new_time
+            MessageType.FEEDBACK, GameFeedbackMessage.TIME_CHANGE, new_time
         )
 
     def test_on_room_change_posts_feedback(self):
         room_name = "Graveyard"
         self.manager.on_room_change(room_name)
         self.mock_msg_handler.post_message.assert_called_once_with(
-            MessageType.FEEDBACK, GameStateMessage.ROOM_CHANGED, room_name
+            MessageType.FEEDBACK, GameFeedbackMessage.ROOM_CHANGED, room_name
         )
 
     def test_on_item_acquired_posts_feedback(self):
         item = "Shotgun"
         self.manager.on_item_acquired(item)
         self.mock_msg_handler.post_message.assert_called_once_with(
-            MessageType.FEEDBACK, GameStateMessage.ITEM_ACQUIRED, item
+            MessageType.FEEDBACK, GameFeedbackMessage.ITEM_ACQUIRED, item
         )
 
     def test_game_over_win_message(self):
@@ -76,17 +78,18 @@ class TestGameFeedbackManager(unittest.TestCase):
         •	And the current room tile should be displayed as “Foyer”
         """
         # self.room = "Foyer"
-        self.mock_player.room = "Foyer"
+        # self.mock_player.room = "Foyer"
         # simulate stats display as welcome
-        # self.manager.show_stats()
-
-        # ensure STATUS messages are posted for all stats
-        self.assertEqual(self.mock_msg_handler.post_message.call_count,4)
-        self.mock_msg_handler.post_message.assert_any_call(
-            MessageType.STATUS,
-            unittest.mock.ANY
-            # Enum("Welcome", {"VAL":})
+        self.manager.on_game_start()
+        self.mock_msg_handler.post_message.assert_called_once_with(
+            MessageType.FEEDBACK, GameSetupMessage.GAME_START, "Foyer"
         )
+        # # ensure STATUS messages are posted for all stats
+        # self.assertEqual(self.mock_msg_handler.post_message.call_count,1)
+        # self.mock_msg_handler.post_message.assert_any_call(
+        #     MessageType.STATUS,
+        #     unittest.mock.ANY
+        # )
 
     def test_show_feedback_item_acquired(self):
         """

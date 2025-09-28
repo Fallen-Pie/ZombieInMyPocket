@@ -31,7 +31,7 @@ class MessageType(Enum):
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
     """Feedback Messages related to game initialisation."""
-    GAME_START = "Welcome Player!"
+    GAME_START = "Welcome Player! You are in room {0}"
     INITIALISE = "Initialising game..."
     SHUFFLING_CARDS = "Shuffling DevCard deck..."
 
