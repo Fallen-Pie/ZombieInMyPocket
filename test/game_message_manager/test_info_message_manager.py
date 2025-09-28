@@ -150,10 +150,9 @@ class TestInfoMessageManager(unittest.TestCase):
         pass
 
     def test_show_tooltip_no_items(self):
-        self.mock_player.items = []
+        self.mock_player.room = "Storage Room"
         self.manager.show_tooltip()
         self.mock_msg_handler.post_message.assert_not_called()
-
 
 if __name__ == "__main__":
     unittest.main()
