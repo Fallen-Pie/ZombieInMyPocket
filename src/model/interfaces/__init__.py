@@ -11,6 +11,9 @@ from .i_game_over import IGameOver
 from .i_game_pieces import IGamePieces
 from .i_tile import ITile
 from .i_player import IPlayer
+# 🔴 Added
+from .i_encounter import IEncounter
+from .i_turn import ITurn
 
 
 __all__ = [
@@ -19,5 +22,8 @@ __all__ = [
     'IGamePieces',
     'ITile',
     'IGameOver',
-    'IPlayer'
+    'IPlayer',
+# 🔴 Added
+    'IEncounter',
+    'ITurn'
 ]

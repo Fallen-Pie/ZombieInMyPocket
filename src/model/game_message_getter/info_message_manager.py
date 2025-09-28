@@ -1,9 +1,11 @@
+# import self
+
 from ..interfaces.i_game_message_getter import IGameMessageGetter
 from ...enums_and_types.game_message import MessageType, GameInstruction
 from src.model.player.player import Player
 from src.model.game_pieces.tile import Tile
+from src.model.game_time import GameTime
 from enum import Enum
-
 
 class InfoMessageManager:
     """
@@ -11,18 +13,19 @@ class InfoMessageManager:
     without controlling game flow. Purely reads from player and turn_manager state
     and posts messages through msg_handler.
     """
-    def __init__(self, msg_handler: IGameMessageGetter, player: Player, tile: Game turn_manager):
+    def __init__(self, msg_handler: IGameMessageGetter, player: Player, tile: Tile, time: GameTime):
         self.msg_handler = msg_handler
         self.player = player
-        self.turn_manager = turn_manager
+        self.room = tile
+        self.time = time
 
     def show_stats(self):
         """Post player's current stats as STATUS messages on player prompt (key press)."""
         stats = [
             f"Health: {self.player.get_health}",
             f"Attack: {self.player.get_attack_power}",
-            f"Room: {self.player.room}",
-            f"Time: {self.turn_manager.current_time}"
+            f"Room: {self.room.get_name}",
+            f"Time: {self.time.get_current_time}"
         ]
         for stat in stats:
             # here we don’t need enum, just reuse STATUS type

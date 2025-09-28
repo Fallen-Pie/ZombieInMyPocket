@@ -1,3 +1,4 @@
+# 🔴 Copied from development/iteration-one
 # Modified by David Watts to prevent errors in testing
 
 from ..interfaces.i_encounter import IEncounter

@@ -3,16 +3,21 @@ from enum import Enum
 from unittest.mock import Mock
 from src.enums_and_types.game_message import MessageType
 from src.model.game_message_getter.info_message_manager import InfoMessageManager
+from src.model.player import Player
+from src.model.game_pieces.tile import Tile
+from src.enums_and_types.direction import Direction
+
 
 class TestInfoMessageManager(unittest.TestCase):
     def set_up(self):
         """ Mocking dependencies"""
         self.mock_msg_handler = Mock()
-        self.mock_player = Mock()
-        self.mock_turn_manager = Mock()
+        self.player = Player()
+        self.room = Tile("Foyer", False, exits=[Direction.NORTH])
+        self.msg_handler = InfoMessageManager(self.player, self.room, self.mock_msg_handler)
         self.manager = InfoMessageManager(
             self.mock_msg_handler,
-            self.mock_player,
+            self.player,
             self.mock_turn_manager
         )
 
@@ -24,7 +29,7 @@ class TestInfoMessageManager(unittest.TestCase):
         •	Then the player should see a welcome message
         •	And the current room tile should be displayed as “Foyer”
         """
-        self.mock_player.room = "Foyer"
+        self.player.room = "Foyer"
 
         # simulate stats display as welcome
         self.manager.show_stats()
@@ -43,7 +48,7 @@ class TestInfoMessageManager(unittest.TestCase):
         •	When the player moves to a different room
         •	Then a message should display the updated room name.
         """
-        self.mock_player.room = "Kitchen"
+        self.player.room = "Kitchen"
         self.manager.show_instructions()  # Should map room to instruction if available
         # Kitchen not mapped, so no instruction should be posted
         self.mock_msg_handler.post_message.assert_not_called()

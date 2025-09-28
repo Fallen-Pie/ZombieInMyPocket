@@ -41,3 +41,7 @@ class ItemName(Enum):
     CANDLE = "Candle"
     CHAINSAW = "Chainsaw"
     MACHETE = "Machete"
+
+# 🔴 Added
+class InputOptions:
+    pass

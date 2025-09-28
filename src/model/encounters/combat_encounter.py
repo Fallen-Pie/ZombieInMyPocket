@@ -1,3 +1,4 @@
+# 🔴 Copied from development/iteration-one
 from src.model.interfaces import IEncounter, IPlayer
 
 class CombatEncounter(IEncounter):
