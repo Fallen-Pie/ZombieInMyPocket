@@ -1,5 +1,20 @@
 from enum import Enum
 
+# class MessageCategory(Enum):
+#     EVENT = "event_triggered"
+#     KEY = "key_triggered"
+
+class EventMessage(Enum):
+    GAME_STATE = "Game update: {0}"
+    ALERT = "⚠ Alert: {0}"
+    INVALID_MOVE = "Invalid move: {0}"
+
+
+class KeyMessage(Enum):
+    TOOLTIP = "Info: {0}"
+    STATISTICS = "Stats → Health: {0}, Attack: {1}, Time: {2}, Room: {3}"
+
+
 class MessageType(Enum):
     ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
     STATUS = "status"         # Persistent state (time, health, room updates)

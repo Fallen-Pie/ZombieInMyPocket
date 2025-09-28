@@ -7,7 +7,7 @@ from enum import Enum
 from ...enums_and_types.game_message import MessageType
 
 
-class IMessageHandler(ABC):
+class IGameMessageGetter(ABC):
     """Interface for handling game messages of different types."""
 
     @abstractmethod
