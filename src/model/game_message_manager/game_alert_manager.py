@@ -1,11 +1,10 @@
-from ...enums_and_types.game_message import MessageType, EventMessage, AlertMessage
+from ...enums_and_types.game_message import MessageType, AlertMessage
 from ..interfaces.i_game_message_manager import IGameMessageGetter
 from src.model.game_message_manager import  EventDrivenManager
 
 class GameAlertManager(EventDrivenManager):
     """ Event-driven handling of alerts and invalid moves."""
     def __init__(self, msg_handler: IGameMessageGetter, player):
-        # self.msg_handler = msg_handler
         super().__init__(msg_handler)
         self.player = player
 

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 
-from src.model.interfaces.i_game_message_manager import IGameMessageGetter
+from src.model.interfaces.i_game_message_manager import IGameMessageManager
 # from src.enums_and_types.direction import Direction
 # from src.model.game_pieces.tile import Tile
 # from src.model.game_time import GameTime

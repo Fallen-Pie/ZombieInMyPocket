@@ -1,6 +1,6 @@
 # import self
 
-from ..interfaces.i_game_message_manager import IGameMessageGetter
+from ..interfaces.i_game_message_manager import IGameMessageManager
 from ...enums_and_types.game_message import MessageType, GameInstruction
 from src.model.player.player import Player
 from src.model.game_pieces.tile import Tile
@@ -13,7 +13,7 @@ class InfoMessageManager:
     without controlling game flow. Purely reads from player and turn_manager state
     and posts messages through msg_handler.
     """
-    def __init__(self, msg_handler: IGameMessageGetter, player: Player, tile: Tile, time: GameTime):
+    def __init__(self, msg_handler: IGameMessageManager, player: Player, tile: Tile, time: GameTime):
         self.msg_handler = msg_handler
         self.player = player
         self.room = tile
@@ -45,7 +45,7 @@ class InfoMessageManager:
         current_room = getattr(self.player, "room", None)
         instruction = room_instruction_map.get(current_room)
         if instruction:
-            self.msg_handler.post_message(MessageType.INSTRUCTION, instruction)
+            self.msg_handler.post_message(MessageType.TOOLTIP, instruction)
 
     def show_tooltip(self):
         """
@@ -55,4 +55,4 @@ class InfoMessageManager:
         for item in items:
             # Expect each item has 'name' and 'attack_score'
             tooltip_text = f"{item.name} → Attack: {getattr(item, 'attack_score', 0)}"
-            self.msg_handler.post_message(MessageType.INSTRUCTION, Enum("Raw", {"VAL": tooltip_text}).VAL)
+            self.msg_handler.post_message(MessageType.TOOLTIP, Enum("Raw", {"VAL": tooltip_text}).VAL)

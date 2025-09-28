@@ -4,22 +4,29 @@ from enum import Enum
 #     EVENT = "event_triggered"
 #     KEY = "key_triggered"
 
-class EventMessage(Enum):
-    GAME_STATE = "Game update: {0}"
+# class EventMessage(Enum):
+#     GAME_STATE = "Game update: {0}"
+#     ALERT = "⚠ Alert: {0}"
+#     FEEDBACK = "⚠ Update: {0}"
+#     INVALID_MOVE = "Invalid move: {0}"
+#
+# class KeyMessage(Enum):
+#     TOOLTIP = "Info: {0}"
+#     STATISTICS = "Stats → Health: {0}, Attack: {1}, Time: {2}, Room: {3}"
+
+class MessageType(Enum):
+    STATUS = "Game update: {0}"
     ALERT = "⚠ Alert: {0}"
+    FEEDBACK = "⚠ Update: {0}"
     INVALID_MOVE = "Invalid move: {0}"
 
-
-class KeyMessage(Enum):
     TOOLTIP = "Info: {0}"
     STATISTICS = "Stats → Health: {0}, Attack: {1}, Time: {2}, Room: {3}"
 
-
-class MessageType(Enum):
-    ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
-    STATUS = "status"         # Persistent state (time, health, room updates)
-    INSTRUCTION = "instruction"  # Tips, prompts, or guidance
-    FEEDBACK = "feedback"     # General events (items acquired, score gained) and Actions (draw card, grab item, etc.)
+    # ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
+    # STATUS = "status"         # Persistent state (time, health, room updates)
+    # INSTRUCTION = "instruction"  # Tips, prompts, or guidance
+    # FEEDBACK = "feedback"     # General events (items acquired, score gained) and Actions (draw card, grab item, etc.)
 
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
@@ -29,7 +36,7 @@ class GameSetupMessage(Enum):
     SHUFFLING_CARDS = "Shuffling DevCard deck..."
 
 # Arsenie: [Event-driven] List of the game states, used in get-game-status and game-state-manager.
-class GameStateMessage(Enum):
+class GameFeedbackMessage(Enum):
     """Feedback Message Codes for changes in the game triggerred by the user."""
     TIME_CHANGE= "It is now {} PM"
     ROOM_CHANGED = "You are now in room {}"
