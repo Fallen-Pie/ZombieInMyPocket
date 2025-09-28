@@ -1,6 +1,6 @@
 # import self
 
-from ..interfaces.i_game_message_getter import IGameMessageGetter
+from ..interfaces.i_game_message_manager import IGameMessageGetter
 from ...enums_and_types.game_message import MessageType, GameInstruction
 from src.model.player.player import Player
 from src.model.game_pieces.tile import Tile

@@ -1,13 +1,13 @@
 import unittest
 from unittest.mock import Mock
 
-from src.model.interfaces.i_game_message_getter import IGameMessageGetter
+from src.model.interfaces.i_game_message_manager import IGameMessageGetter
 # from src.enums_and_types.direction import Direction
 # from src.model.game_pieces.tile import Tile
 # from src.model.game_time import GameTime
 # from src.model.player import Player
 
-from src.model.game_message_getter.info_message_manager import InfoMessageManager
+from src.model.game_message_manager.info_message_manager import InfoMessageManager
 from src.enums_and_types.game_message import MessageType, GameInstruction
 
 

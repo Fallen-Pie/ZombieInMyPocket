@@ -2,8 +2,7 @@ from enum import Enum
 import unittest
 from unittest.mock import Mock
 from ...src.enums_and_types.game_message import MessageType, GameStateMessage, GameSetupMessage, AlertMessage, GameOverMessage,GameInstruction
-from ...src.model.game_message_getter.game_message_getter import GameGameMessageGetter
-
+from ...src.model.game_message_manager.game_message_getter import GameGameMessageManager
 class FakeEnum(Enum):
     """Mock enum for testing"""
     SIMPLE = "Plain message"
@@ -13,7 +12,7 @@ class FakeEnum(Enum):
 class TestGameMessageGetter(unittest.TestCase):
     def set_up(self):
         """ """
-        self.getter = GameGameMessageGetter()
+        self.getter = GameGameMessageManager()
 
     def test_post_and_get_simple_message(self):
         """Should store and retrieve a simple enum message."""

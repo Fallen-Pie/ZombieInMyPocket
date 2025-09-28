@@ -1,5 +1,5 @@
 from ...enums_and_types.game_message import MessageType, EventMessage, GameStateMessage, GameOverMessage
-from ..interfaces.i_game_message_getter import IGameMessageGetter
+from ..interfaces.i_game_message_manager import IGameMessageGetter
 
 class GameFeedbackManager:
     """Handles feedback-type messages, as a response to player's actions."""
