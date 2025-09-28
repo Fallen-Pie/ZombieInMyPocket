@@ -1,25 +1,33 @@
 import unittest
-from enum import Enum
 from unittest.mock import Mock
-from src.enums_and_types.game_message import MessageType
-from src.model.game_message_getter.info_message_manager import InfoMessageManager
-from src.model.player import Player
-from src.model.game_pieces.tile import Tile
+
 from src.enums_and_types.direction import Direction
+from src.enums_and_types.game_message import MessageType
+from src.model.game_pieces.tile import Tile
+from src.model.game_time import GameTime
+from src.model.player import Player
+from src.model.interfaces.i_game_message_getter import IGameMessageGetter
+from src.model.game_message_getter.info_message_manager import InfoMessageManager
 
 
 class TestInfoMessageManager(unittest.TestCase):
     def set_up(self):
         """ Mocking dependencies"""
-        self.mock_msg_handler = Mock()
-        self.player = Player()
-        self.room = Tile("Foyer", False, exits=[Direction.NORTH])
-        self.msg_handler = InfoMessageManager(self.player, self.room, self.mock_msg_handler)
-        self.manager = InfoMessageManager(
+        self.mock_msg_handler = IGameMessageGetter
+        self.player = Player,
+        self.tile = Tile,
+        self.time = GameTime,
+
+        self.manager = (
             self.mock_msg_handler,
-            self.player,
-            self.mock_turn_manager
+            self.tile,
+            self.time,
+
+            # self.player = new Player(self.player),
+            # self.player.room = Tile("Foyer",  False, exits=[Direction.NORTH]),
+            # self.turn
         )
+        self.msg_handler = InfoMessageManager(self.player, self.room, self.mock_msg_handler)
 
     def test_welcome_message_start_game(self):
         """
@@ -29,7 +37,7 @@ class TestInfoMessageManager(unittest.TestCase):
         •	Then the player should see a welcome message
         •	And the current room tile should be displayed as “Foyer”
         """
-        self.player.room = "Foyer"
+        self.room = "Foyer"
 
         # simulate stats display as welcome
         self.manager.show_stats()
