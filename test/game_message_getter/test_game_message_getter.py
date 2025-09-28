@@ -11,7 +11,6 @@ class FakeEnum(Enum):
     INVALID_TEMPLATE = 123
 
 class TestGameMessageGetter(unittest.TestCase):
-
     def set_up(self):
         """ """
         self.getter = GameGameMessageGetter()

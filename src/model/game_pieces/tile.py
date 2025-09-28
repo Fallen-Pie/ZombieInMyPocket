@@ -1,8 +1,7 @@
 from src.enums_and_types import *
 from ..interfaces.i_tile import ITile
-from ..encounters.encounters import IEncounter, HealthEncounter, \
+from src.model.encounters import IEncounter, HealthEncounter, \
      ItemEncounter, TotemEncounter
-
 
 class Tile(ITile):
 
