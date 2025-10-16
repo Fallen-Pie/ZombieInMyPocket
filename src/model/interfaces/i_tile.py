@@ -4,12 +4,13 @@ This module defines the abstract base class for tiles that make up the
 game board, including their exits, encounters, and special properties.
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from src.enums_and_types import *
 from ..encounters.not_implemented_encounters import IEncounter
+from .i_card import ICard
 
 
-class ITile(ABC):
+class ITile(ICard):
     """Abstract interface for game tiles.
     
     Tiles represent rooms and outdoor areas that the player can explore.

@@ -1,5 +1,6 @@
 from src.enums_and_types import *
 from ..interfaces.i_tile import ITile
+from ..interfaces.i_card import ICard
 from ..encounters.not_implemented_encounters import IEncounter, TotemEncounter
 from ..encounters.item_encounter import ItemEncounter
 from ..encounters.health_encounter import HealthEncounter
@@ -48,7 +49,7 @@ class Tile(ITile):
         self._rotation = rotation
 
     @staticmethod
-    def get_indoor_tiles() -> list[ITile]:
+    def get_indoor_tiles() -> list[ICard]:
         return [
 
             Tile("Bathroom", False,
@@ -86,7 +87,7 @@ class Tile(ITile):
         ]
 
     @staticmethod
-    def get_outdoor_tiles() -> list[ITile]:
+    def get_outdoor_tiles() -> list[ICard]:
         return [
 
             Tile("Garden", True,

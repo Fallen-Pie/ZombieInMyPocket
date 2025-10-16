@@ -3,6 +3,7 @@ from ..encounters.health_encounter import HealthEncounter
 from ..encounters.item_encounter import ItemEncounter
 from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_item import IItem
+from ..interfaces.i_card import ICard
 from ..item import get_item
 from src.enums_and_types import ItemName
 from ..encounters.not_implemented_encounters import *
@@ -26,7 +27,7 @@ class DevCard(IDevCard):
         return self._encounters[time - 9]
 
     @staticmethod
-    def get_dev_cards() -> list[IDevCard]:
+    def get_dev_cards() -> list[ICard]:
         return [
             DevCard(
                 get_item(ItemName.OIL),

@@ -2,11 +2,11 @@ from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
 from ..game_time.game_time import ITime
-from .tile import Tile
-from .dev_card import DevCard
 from .board import Board
 from src.enums_and_types import *
 from random import shuffle
+from .card_factory import CardFactory
+from typing import cast
 
 
 class GamePieces(IGamePieces):
@@ -16,9 +16,16 @@ class GamePieces(IGamePieces):
 
     def setup(self, time: ITime) -> None:
         self._board = Board()
-        self._dev_cards: list[IDevCard] = DevCard.get_dev_cards()
-        self._indoor_tiles: list[ITile] = Tile.get_indoor_tiles()
-        self._outdoor_tiles: list[ITile] = Tile.get_outdoor_tiles()
+        self._card_factory = CardFactory()
+        self._dev_cards: list[IDevCard] = cast(
+                list[IDevCard],
+                self._card_factory.get_cards(CardType.DEVELOPMENT))
+        self._indoor_tiles: list[ITile] = cast(
+                list[ITile],
+                self._card_factory.get_cards(CardType.INDOOR_TILE))
+        self._outdoor_tiles: list[ITile] = cast(
+                list[ITile],
+                self._card_factory.get_cards(CardType.OUTDOOR_TILE))
         self._time = time
 
         # The top card before it is shuffled is the foyer
@@ -36,7 +43,9 @@ class GamePieces(IGamePieces):
         if self.dev_cards_remaining() == 0:
             self._time.increase_current_time()
             if self._time.get_current_time() != '12:00am':
-                self._dev_cards = DevCard.get_dev_cards()
+                self._dev_cards = cast(
+                        list[IDevCard],
+                        self._card_factory.get_cards(CardType.DEVELOPMENT))
                 shuffle(self._dev_cards)
         return self._dev_cards.pop()
 

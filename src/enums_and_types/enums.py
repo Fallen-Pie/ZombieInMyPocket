@@ -100,3 +100,9 @@ class ItemName(Enum):
     CANDLE = "Candle"
     CHAINSAW = "Chainsaw"
     MACHETE = "Machete"
+
+
+class CardType(Enum):
+    INDOOR_TILE = 0
+    OUTDOOR_TILE = 1
+    DEVELOPMENT = 2

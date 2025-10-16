@@ -4,12 +4,13 @@ This module defines the abstract base class for development cards that
 contain items and encounter information based on the game time.
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from ..encounters.not_implemented_encounters import IEncounter
 from .i_item import IItem
+from .i_card import ICard
 
 
-class IDevCard(ABC):
+class IDevCard(ICard):
     """Abstract interface for development cards in the game.
     
     Development cards contain an item and encounters that vary based on
