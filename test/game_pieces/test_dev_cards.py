@@ -41,11 +41,11 @@ class TestDevCards(TestCase):
         for _ in range(9):
             self.game_pieces.draw_dev_card()
         
-        expected = '9:00pm'
+        expected = 9
         actual = self.time.get_current_time()
         self.assertEqual(expected, actual)
 
         self.game_pieces.draw_dev_card()
-        expected = '10:00pm'
+        expected = 10
         actual = self.time.get_current_time()
         self.assertEqual(expected, actual)
