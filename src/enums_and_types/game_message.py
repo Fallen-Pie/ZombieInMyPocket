@@ -15,18 +15,12 @@ from enum import Enum
 #     STATISTICS = "Stats → Health: {0}, Attack: {1}, Time: {2}, Room: {3}"
 
 class MessageType(Enum):
-    STATUS = "Game update: {0}"
-    ALERT = "⚠ Alert: {0}"
-    FEEDBACK = "⚠ Update: {0}"
-    INVALID_MOVE = "Invalid move: {0}"
+    STATUS = "Game update: {0}"             # Persistent state (time, health, room updates)
+    ALERT = "⚠ Alert: {0}"                  # Urgent warning (low health, invalid move, etc.)
+    FEEDBACK = "⚠ Update: {0}"              # General events (items acquired, score gained) and Actions (draw card, grab item, etc.)
 
-    TOOLTIP = "Info: {0}"
+    TOOLTIP = "Info: {0}"                   # Tips, prompts, or guidance
     STATISTICS = "Stats → Health: {0}, Attack: {1}, Time: {2}, Room: {3}"
-
-    # ALERT = "alert"           # Urgent warning (low health, invalid move, etc.)
-    # STATUS = "status"         # Persistent state (time, health, room updates)
-    # INSTRUCTION = "instruction"  # Tips, prompts, or guidance
-    # FEEDBACK = "feedback"     # General events (items acquired, score gained) and Actions (draw card, grab item, etc.)
 
 # Arsenie: [Event-driven] Game setup messages, used in get-game-status and game-state-manager.
 class GameSetupMessage(Enum):
