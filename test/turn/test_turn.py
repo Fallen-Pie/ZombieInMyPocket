@@ -5,7 +5,7 @@ from src.model.turn import *
 from src.model.game_pieces import *
 from src.model.player import Player
 from src.model.game_time.game_time import GameTime
-from src.model.turn.turn_enums import Triggers
+from src.model.turn.turn_common import Triggers
 from src.view.dummy_ui import DummyUI
 
 class TestTurn(unittest.TestCase):

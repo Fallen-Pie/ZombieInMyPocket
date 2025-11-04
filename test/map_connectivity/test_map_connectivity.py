@@ -5,8 +5,8 @@
 
 from unittest import TestCase
 from src.model.game_pieces import GamePieces, Tile
-from src.model.interfaces.i_tile import ITile
-from src.enums_and_types import Direction
+from src.common.interfaces import ITile
+from src.common import Direction
 from src.model.game_time.game_time import GameTime
 
 

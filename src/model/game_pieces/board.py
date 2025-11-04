@@ -1,8 +1,6 @@
-from ..interfaces.i_tile import ITile
-from src.enums_and_types import *
+from src.common import Position, Direction, Rotation, ITile
 
 type TileDict = dict[Position, ITile]
-
 
 class Board:
 

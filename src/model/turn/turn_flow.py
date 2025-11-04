@@ -1,8 +1,8 @@
 """Controls the flow of the turn by changing state"""
 from typing import Callable, Any, TYPE_CHECKING
 
-from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
-from ..interfaces import ITurn
+from src.model.turn.turn_common import *
+from src.common.interfaces import ITurn
 
 if TYPE_CHECKING:
     from .state import State

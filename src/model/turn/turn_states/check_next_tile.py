@@ -1,7 +1,6 @@
 """Check if the given tile and exit leads to a new tile or an existing tile."""
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
+from ..state import State, StateNames, Triggers, ServiceNames, ServiceMethods
 
 
 class CheckNextTile(State):

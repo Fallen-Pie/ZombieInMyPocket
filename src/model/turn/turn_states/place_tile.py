@@ -1,9 +1,7 @@
 """Places a tile"""
 
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
-from ....enums_and_types.enums import Rotation
+from ..state import State, StateNames, ServiceNames, ServiceMethods, Triggers
 
 
 class PlaceTile(State):

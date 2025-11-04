@@ -1,8 +1,9 @@
-from ..interfaces.i_dev_card import IDevCard
-from ..interfaces.i_item import IItem
+from src.common import ItemName, IDevCard, IItem, IEncounter
+
+from src.model.encounters import *
+
 from ..item import get_item
-from src.enums_and_types import ItemName
-from ..encounters.encounters import *
+
 
 
 class DevCard(IDevCard):
@@ -43,12 +44,12 @@ class DevCard(IDevCard):
                 CombatEncounter(4),
                 HealthEncounter(-1)
             ),
-            DevCard(
-                get_item(ItemName.MACHETE),
-                CombatEncounter(4),
-                HealthEncounter(-1),
-                CombatEncounter(6)
-            ),
+            # DevCard(
+            #     get_item(ItemName.MACHETE),
+            #     CombatEncounter(4),
+            #     HealthEncounter(-1),
+            #     CombatEncounter(6)
+            # ),
             DevCard(
                 get_item(ItemName.GRISLY_FEMUR),
                 ItemEncounter(None),

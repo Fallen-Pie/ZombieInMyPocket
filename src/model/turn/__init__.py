@@ -12,7 +12,7 @@ if os.getenv("RUNNING_TURN_TESTS") == "1":
 
     from .turn_flow import TurnFlow
     from .state import State
-    from .turn_enums import Triggers, StateNames, ServiceNames, ServiceMethods
+    from .turn_common import Triggers, StateNames, ServiceNames, ServiceMethods
 
     __all__ = ["State",
                "TurnFlow",

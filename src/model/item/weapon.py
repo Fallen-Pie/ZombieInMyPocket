@@ -1,4 +1,5 @@
-from src.enums_and_types import ItemName, ItemType
+from src.common import ItemName, ItemType
+
 from .item import Item
 
 

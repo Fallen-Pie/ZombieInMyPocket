@@ -1,6 +1,4 @@
-from ..state import State
-from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
-
+from ..state import State, StateNames, Triggers
 
 class GetTileEncounter(State):
     def __init__(self, name=StateNames.GET_TILE_ENCOUNTER):

@@ -1,9 +1,12 @@
 import unittest
 
-from src.enums_and_types import ItemName
+from src.common import ItemName
 from src.model import Player
-from src.model.encounters.encounters import HealthEncounter, CowerEncounter, CombatEncounter, ItemEncounter, \
-    MessageEncounter, TotemEncounter
+from src.model.encounters.not_implemented_encounters import MessageEncounter, TotemEncounter
+from src.model.encounters.item_encounter import ItemEncounter
+from src.model.encounters.combat_encounter import CombatEncounter
+from src.model.encounters.cower_encounter import CowerEncounter
+from src.model.encounters.health_encounter import HealthEncounter
 from src.model.item import get_item
 
 

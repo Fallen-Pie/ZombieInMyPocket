@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock, patch
 from src.controller.game_controller import GameController
 from src.view.interfaces.i_ui import IUI
-from src.model.turn.turn_enums import ServiceNames
+from src.model.turn.turn_common import ServiceNames
 
 class TestGameDisplay(unittest.TestCase):
     """User Story: Game State Display

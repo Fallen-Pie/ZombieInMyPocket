@@ -5,8 +5,10 @@ conditions and triggering appropriate game end events.
 """
 
 from abc import ABC, abstractmethod
-from ..event import Event
-from src.enums_and_types import GameOverReason
+
+from ..enums import GameOverReason
+
+from .i_event import IEvent
 
 
 class IGameOver(ABC):
@@ -18,7 +20,7 @@ class IGameOver(ABC):
 
     @property
     @abstractmethod
-    def game_over_event(self) -> Event[GameOverReason]:
+    def game_over_event(self) -> IEvent[GameOverReason]:
         """Get the game over event that can be subscribed to.
         
         Returns:
@@ -28,7 +30,7 @@ class IGameOver(ABC):
 
     @game_over_event.setter
     @abstractmethod
-    def game_over_event(self, value: Event[GameOverReason]) -> None:
+    def game_over_event(self, value: IEvent[GameOverReason]) -> None:
         """Set the game over event.
         
         Args:

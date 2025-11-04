@@ -5,7 +5,7 @@ specifying the required properties and methods for item functionality.
 """
 
 from abc import ABC, abstractmethod
-from src.enums_and_types import *
+from src.common.enums import ItemName, ItemType
 
 
 class IItem(ABC):

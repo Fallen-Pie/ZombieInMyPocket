@@ -1,7 +1,8 @@
-from src.enums_and_types.enums import Input_options
-from ..state import State
-from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
-from src.model.encounters import encounters
+from src.common import InputOptions
+
+from src.model.encounters import CowerEncounter
+
+from ..state import State, StateNames, Triggers
 
 class GetCowerEncounter(State):
     def __init__(self, name=StateNames.GET_COWER_ENCOUNTER):
@@ -13,16 +14,18 @@ class GetCowerEncounter(State):
 
     @staticmethod
     def _get_cower_encounter():
-        return encounters.CowerEncounter()
+        return CowerEncounter()
 
-    def get_input_options(self):
-        return [Input_options.YES, Input_options.NO]
+    @staticmethod
+    def get_input_options():
+        return [InputOptions.YES, InputOptions.NO]
 
-    def get_prompt(self):
+    @staticmethod
+    def get_prompt():
         return "Would you like to cower"
 
     def handle_request(self, selected_option):
-        if selected_option == '0': #Input_options.YES.value:
+        if selected_option == InputOptions.YES.value:
             print("starting cower encounter")
             self.result = (
                 self._get_cower_encounter(),

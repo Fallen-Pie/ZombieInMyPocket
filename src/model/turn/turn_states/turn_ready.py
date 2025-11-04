@@ -1,7 +1,6 @@
 """Ready to start a turn"""
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, Triggers
+from ..state import State, StateNames, Triggers
 
 #if TYPE_CHECKING:
 
@@ -22,7 +21,7 @@ class Ready(State):
 
     def handle_request(self):
         """Wait before starting a new turn"""
-        print(f'{'-'*10}starting a new turn{'-'*10}')
+        #print(f'{'-'*10}starting a new turn{'-'*10}')
         super().handle_request()
 
 

@@ -1,6 +1,6 @@
 from src.model.game_pieces import Tile
 import unittest
-from src.enums_and_types import *
+from src.common import *
 
 
 class TestTile(unittest.TestCase):

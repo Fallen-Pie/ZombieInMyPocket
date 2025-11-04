@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ...enums_and_types.enums import MessageCode, GameOverConditions
+from src.common.enums import MessageCode, GameOverConditions
 
 
 class IGameStatus(ABC):

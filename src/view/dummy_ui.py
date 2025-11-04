@@ -1,11 +1,20 @@
-from typing import Any, Callable
-from src.enums_and_types.enums import Direction, Rotation
-from .interfaces.i_ui import IUI
+from typing import Any
+from .interfaces.i_ui import IUI, Direction, Rotation
 
 class DummyUI(IUI):
     
     def __init__(self):
         self.last_prompt = ""
+
+    def display_board(self, tiles):
+        """display a grid with the give height and width"""
+        for position, tile in tiles.items():
+            print(position, tile)
+
+    @staticmethod
+    def _get_tile(tile) -> str:
+        """displays the give tile"""
+        return str(tile)
 
     def display_message(self, message: str) -> None:
         print(message)
@@ -56,11 +65,11 @@ class DummyUI(IUI):
             print("Invalid input! Please try again.")
 
 
-    def get_input_with_callback(self, prompt: str, options: Any, 
-                              callback: Callable) -> None:
-        """Get input and call the callback with the result"""
-        result = self.get_input(prompt, options)
-        callback(result)
+    # def get_input_with_callback(self, prompt: str, options: Any,
+    #                           callback: Callable) -> None:
+    #     """Get input and call the callback with the result"""
+    #     result = self.get_input(prompt, options)
+    #     callback(result)
 
 
     def _get_rotation_text(self, rotation: Rotation) -> str:

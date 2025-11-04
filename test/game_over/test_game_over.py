@@ -1,7 +1,7 @@
 from unittest import TestCase
-from src.model.interfaces import IGameOver
+from src.common.interfaces import IGameOver
 from src.model.game_over import GameOver
-from src.enums_and_types import GameOverReason
+from src.common import GameOverReason
 
 
 class TestGameOver(TestCase):

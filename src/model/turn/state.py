@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
-from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames
+from src.model.turn.turn_common import Triggers, ServiceNames, ServiceMethods, StateNames
 
 if TYPE_CHECKING:
     #only imported for type checking

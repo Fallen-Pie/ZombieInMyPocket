@@ -1,5 +1,4 @@
-from src.enums_and_types import ItemName, ItemType
-from ..interfaces import IItem
+from src.common import ItemName, ItemType, IItem
 
 
 class Item(IItem):

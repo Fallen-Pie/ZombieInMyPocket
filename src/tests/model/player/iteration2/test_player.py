@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import Mock, patch
 from src.model.player.iteration2.player import Player, PlayerImplementation
-from src.enums_and_types.enums import ItemType
-from src.model.interfaces.i_item import IItem
+from src.common.enums import ItemType
+from src.common.interfaces.i_item import IItem
 
 class TestPlayer(unittest.TestCase):
 

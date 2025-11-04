@@ -1,8 +1,5 @@
 import unittest
-from src.enums_and_types import GameOverReason
-from src.model.game_over import GameOver
 from src.model.game_time import GameTime
-from src.model.interfaces import IGameOver
 
 class MidnightGameOver(unittest.TestCase):
     """

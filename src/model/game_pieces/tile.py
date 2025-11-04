@@ -1,8 +1,6 @@
-from src.enums_and_types import *
-from ..interfaces.i_tile import ITile
-from ..encounters.encounters import IEncounter, HealthEncounter, \
-     ItemEncounter, TotemEncounter
+from src.common import ITile, IEncounter, Direction, Rotation
 
+from src.model.encounters import TotemEncounter, ItemEncounter, HealthEncounter
 
 class Tile(ITile):
 
@@ -19,6 +17,14 @@ class Tile(ITile):
         self._front_door = front_door
         self._encounter = encounter
         self._rotation = Rotation.NONE
+
+    def __str__(self):
+        location = f"{"Outdoors" if self._is_outdoors else "Indoors"} in the {self._name}"
+        exits = f"Exits lead {self.get_exits()}"
+        front_door = ""
+        if self._front_door is not None:
+            front_door = f"\nthe front door is to the {self.get_front_door()}"
+        return f"{location}\n{exits}{front_door}"
 
     def get_name(self) -> str:
         return self._name

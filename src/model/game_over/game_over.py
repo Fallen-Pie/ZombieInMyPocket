@@ -1,6 +1,5 @@
 from ..event import Event
-from src.enums_and_types import GameOverReason
-from ..interfaces import IGameOver
+from src.common import GameOverReason, IGameOver
 
 
 class GameOver(IGameOver):

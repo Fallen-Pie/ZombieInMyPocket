@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.enums_and_types import ItemName
+from src.common import ItemName
 from src.model.item import get_item, combine_items
 
 

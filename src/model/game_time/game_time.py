@@ -1,29 +1,19 @@
-from abc import ABC, abstractmethod
-
-class ITime(ABC):
-    """Abstract Class for building GameTime Classes"""
-    @abstractmethod
-    def get_current_time(self):
-        ...
-
-    @abstractmethod
-    def increase_current_time(self):
-        ...
-
-    @abstractmethod
-    def is_time_valid(self):
-        ...
+from src.common import ITime
 
 class GameTime(ITime):
     """Handles Game Time and validation"""
+    START_TIME = 9
+    END_TIME = 12
+    TIME_INCREMENT = 1
+
     def __init__(self):
-        self.time = 9
+        self.time = self.START_TIME
 
     def get_current_time(self) -> int:
         return self.time
 
     def increase_current_time(self):
-        self.time += 1
+        self.time += self.TIME_INCREMENT
 
     def is_time_valid(self) -> bool:
-        return True if self.time < 12 else False
+        return True if self.time < self.END_TIME else False

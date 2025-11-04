@@ -1,8 +1,12 @@
-from typing import Protocol, Any, Callable
-from src.enums_and_types.enums import Rotation
+from typing import Protocol, Any
+from src.common import TileDict, Rotation, Direction
 
 class IUI(Protocol):
     """Interface for the user interface."""
+
+    def display_board(self, tiles: TileDict) -> None:
+        """display a grid with the give height and width"""
+        ...
 
     def display_message(self, message: str) -> None:
         """Display a message to the user."""
@@ -12,6 +16,7 @@ class IUI(Protocol):
                              items: list[str]) -> None:
         """Display the current player state."""
         ...
+
     def display_game_state(self, tile, tile_position) -> None:
         """Display the current game state."""
         ...
@@ -20,10 +25,10 @@ class IUI(Protocol):
         """Get input from the user."""
         ...
 
-    def get_input_with_callback(self, prompt: str, options: Any, 
-                              callback: Callable[[Any], None]) -> None:
-        """Get input and call the callback with the result."""
-        ...
+    # def get_input_with_callback(self, prompt: str, options: Any,
+    #                           callback: Callable[[Any], None]) -> None:
+    #     """Get input and call the callback with the result."""
+    #    ...
     
     def _get_rotation_text(self, rotation: Rotation) -> str:
         """Convert rotation enum to readable text"""

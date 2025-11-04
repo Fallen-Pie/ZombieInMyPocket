@@ -5,10 +5,10 @@ components including development cards, tiles, and board placement logic.
 """
 
 from abc import ABC, abstractmethod
+from src.common.types import Position
+from src.common.enums import Direction
 from .i_dev_card import IDevCard
-from .i_tile import ITile
-from ..game_time.game_time import ITime
-from src.enums_and_types import *
+from .i_tile import  ITile
 
 
 class IGamePieces(ABC):
@@ -18,14 +18,14 @@ class IGamePieces(ABC):
     and board state tracking for the game.
     """
 
-    @abstractmethod
-    def setup(self, time: ITime) -> None:
-        """Initialize the game pieces including shuffling decks.
-        
-        Args:
-            time: The game time manager
-        """
-        pass
+    # @abstractmethod
+    # def setup(self, time: ITime) -> None:
+    #     """Initialize the game pieces including shuffling decks.
+    #
+    #     Args:
+    #         time: The game time manager
+    #     """
+    #     pass
 
     @abstractmethod
     def draw_dev_card(self) -> IDevCard:
@@ -46,40 +46,52 @@ class IGamePieces(ABC):
         pass
 
     @abstractmethod
-    def draw_indoor_tile(self) -> ITile:
-        """Draw the next indoor tile from the deck.
-        
-        Returns:
-            The next indoor tile to be placed
+    def draw_tile(self) -> ITile | None:
+        """
+        Draws the next indoor or outdoor tile in the deck
+        based on indoor status
+
+        returns:
+            A tile from the indoor or outdoor deck
+            None if no tiles are remaining in the deck
         """
         pass
 
-    @abstractmethod
-    def indoor_tiles_remaining(self) -> int:
-        """Get the number of indoor tiles left in the deck.
-        
-        Returns:
-            Number of indoor tiles remaining
-        """
-        pass
-
-    @abstractmethod
-    def draw_outdoor_tile(self) -> ITile:
-        """Draw the next outdoor tile from the deck.
-        
-        Returns:
-            The next outdoor tile to be placed
-        """
-        pass
-
-    @abstractmethod
-    def outdoor_tiles_remaining(self) -> int:
-        """Get the number of outdoor tiles left in the deck.
-        
-        Returns:
-            Number of outdoor tiles remaining
-        """
-        pass
+    # @abstractmethod
+    # def draw_indoor_tile(self) -> ITile:
+    #     """Draw the next indoor tile from the deck.
+    #
+    #     Returns:
+    #         The next indoor tile to be placed
+    #     """
+    #     pass
+    #
+    # @abstractmethod
+    # def indoor_tiles_remaining(self) -> int:
+    #     """Get the number of indoor tiles left in the deck.
+    #
+    #     Returns:
+    #         Number of indoor tiles remaining
+    #     """
+    #     pass
+    #
+    # @abstractmethod
+    # def draw_outdoor_tile(self) -> ITile:
+    #     """Draw the next outdoor tile from the deck.
+    #
+    #     Returns:
+    #         The next outdoor tile to be placed
+    #     """
+    #     pass
+    #
+    # @abstractmethod
+    # def outdoor_tiles_remaining(self) -> int:
+    #     """Get the number of outdoor tiles left in the deck.
+    #
+    #     Returns:
+    #         Number of outdoor tiles remaining
+    #     """
+    #     pass
 
     @abstractmethod
     def can_place_tile(self, new_tile: ITile, new_exit: Direction,
@@ -128,10 +140,10 @@ class IGamePieces(ABC):
     @abstractmethod
     def get_tile(self, position: Position) -> ITile | None:
         """Get the tile at a specific position on the board.
-        
+
         Args:
             position: The board position to check
-            
+
         Returns:
             The tile at that position, or None if no tile is placed there
         """

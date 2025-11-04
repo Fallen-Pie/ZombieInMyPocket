@@ -1,11 +1,11 @@
+
+from src.common import IItem, ItemName
+
 from .oil import Oil
 from .combine_to_kill import CombineToKill
 from .weapon import Weapon
 from .can_of_soda import CanOfSoda
 from .chainsaw import Chainsaw
-from ..interfaces import IItem
-from src.enums_and_types import ItemName
-
 
 GASOLINE_DESCRIPTION = ("Combine with Candle to kill all zombies without "
                         "taking damage. Combine with Chainsaw to give "

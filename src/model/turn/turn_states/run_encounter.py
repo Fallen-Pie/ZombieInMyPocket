@@ -1,5 +1,4 @@
-from ..state import State
-from ..turn_enums import StateNames, ServiceNames, Triggers
+from ..state import State, StateNames, ServiceNames, Triggers
 
 class RunEncounter(State):
     """Runs the encounter from the previous state"""

@@ -19,9 +19,9 @@ class TestRandomTileSequence(TestCase):
         result: list[str] = []
         for _ in range(6):
             if is_outdoor:
-                tile = self.game_pieces.draw_outdoor_tile()
+                tile = self.game_pieces._draw_outdoor_tile()
             else:
-                tile = self.game_pieces.draw_indoor_tile()
+                tile = self.game_pieces._draw_indoor_tile()
             result.append(tile.get_name())
         print(result)
         return result

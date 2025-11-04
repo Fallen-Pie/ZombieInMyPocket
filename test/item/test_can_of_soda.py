@@ -1,6 +1,6 @@
 from unittest import TestCase
 from src.model.item.item_helper import IItem, get_item
-from src.enums_and_types import ItemName, ItemType
+from src.common import ItemName, ItemType
 
 
 class TestCanOfSoda(TestCase):

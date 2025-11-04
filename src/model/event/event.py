@@ -1,7 +1,9 @@
-from collections.abc import Callable
+from typing import TypeVar, Callable
+from src.common import IEvent
 
+T = TypeVar('T')
 
-class Event[T]:
+class Event(IEvent[T]):
 
     def __init__(self) -> None:
         self.__subscribers: set[Callable[[T], None]] = set()

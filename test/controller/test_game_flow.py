@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock, patch
 from src.controller.game_controller import GameController
 from src.view.interfaces.i_ui import IUI
-from src.enums_and_types.enums import MessageCode
+from src.common.enums import MessageCode
 
 class TestGameFlow(unittest.TestCase):
     """User Story: Game Flow Management

@@ -5,7 +5,7 @@ specifying required methods for health management, combat, movement, and invento
 """
 
 from abc import ABC, abstractmethod
-from src.enums_and_types.types import Position
+from ..types import Position
 from .i_item import IItem
 
 

@@ -1,8 +1,7 @@
 from typing import Any
-from ..state import State
-from ..turn_enums import ServiceNames, ServiceMethods, Triggers, StateNames
+from ..state import State, ServiceNames, ServiceMethods, Triggers, StateNames
 
-#from src.enums_and_types.types import Position
+#from src.common.types import Position
 
 class DrawTile(State):
     """gets a tile, if with position returns the tile at that position,

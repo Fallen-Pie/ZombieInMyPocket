@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 from src.model.player.player import Player, _PlayerImplementation
-from src.model.interfaces.i_item import IItem
+from src.common.interfaces.i_item import IItem
 
 
 class Test_PlayerImplementation(unittest.TestCase):

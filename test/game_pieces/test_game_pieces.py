@@ -1,6 +1,6 @@
 from unittest import TestCase
 from src.model.game_pieces import GamePieces, Tile
-from src.enums_and_types import *
+from src.common import *
 from src.model.game_time.game_time import GameTime
 
 
@@ -40,38 +40,38 @@ class TestGamePieces(TestCase):
             None, None)
 
     def test_seven_indoor_cards(self):
-        self.assertEqual(self.game_pieces.indoor_tiles_remaining(), 7)
+        self.assertEqual(self.game_pieces._indoor_tiles_remaining(), 7)
 
     def test_eight_outdoor_cards(self):
-        self.assertEqual(self.game_pieces.outdoor_tiles_remaining(), 8)
+        self.assertEqual(self.game_pieces._outdoor_tiles_remaining(), 8)
 
     def test_indoor_cards_are_shuffled(self):
         first_game_pieces = GamePieces(GameTime())
         first = (
-            first_game_pieces.draw_indoor_tile(),
-            first_game_pieces.draw_indoor_tile(),
-            first_game_pieces.draw_indoor_tile(),
+            first_game_pieces._draw_indoor_tile(),
+            first_game_pieces._draw_indoor_tile(),
+            first_game_pieces._draw_indoor_tile(),
         )
         second_game_pieces = GamePieces(GameTime())
         second = (
-            second_game_pieces.draw_indoor_tile(),
-            second_game_pieces.draw_indoor_tile(),
-            second_game_pieces.draw_indoor_tile(),
+            second_game_pieces._draw_indoor_tile(),
+            second_game_pieces._draw_indoor_tile(),
+            second_game_pieces._draw_indoor_tile(),
         )
         self.assertNotEqual(first, second)
     
     def test_outdoor_cards_are_shuffled(self):
         first_game_pieces = GamePieces(GameTime())
         first = (
-            first_game_pieces.draw_outdoor_tile(),
-            first_game_pieces.draw_outdoor_tile(),
-            first_game_pieces.draw_outdoor_tile(),
+            first_game_pieces._draw_outdoor_tile(),
+            first_game_pieces._draw_outdoor_tile(),
+            first_game_pieces._draw_outdoor_tile(),
         )
         second_game_pieces = GamePieces(GameTime())
         second = (
-            second_game_pieces.draw_outdoor_tile(),
-            second_game_pieces.draw_outdoor_tile(),
-            second_game_pieces.draw_outdoor_tile(),
+            second_game_pieces._draw_outdoor_tile(),
+            second_game_pieces._draw_outdoor_tile(),
+            second_game_pieces._draw_outdoor_tile(),
         )
         self.assertNotEqual(first, second)
     
@@ -91,12 +91,12 @@ class TestGamePieces(TestCase):
         self.assertNotEqual(first, second)
 
     def test_draw_indoor_card_decrements_count(self):
-        self.game_pieces.draw_indoor_tile()
-        self.assertEqual(self.game_pieces.indoor_tiles_remaining(), 6)
+        self.game_pieces._draw_indoor_tile()
+        self.assertEqual(self.game_pieces._indoor_tiles_remaining(), 6)
 
     def test_draw_outdoor_card_decrements_count(self):
-        self.game_pieces.draw_outdoor_tile()
-        self.assertEqual(self.game_pieces.outdoor_tiles_remaining(), 7)
+        self.game_pieces._draw_outdoor_tile()
+        self.assertEqual(self.game_pieces._outdoor_tiles_remaining(), 7)
 
     def test_foyer_is_at_origin(self):
         tile = self.game_pieces.get_tile((0, 0))

@@ -1,6 +1,6 @@
 import unittest
 from src.model.game_status.game_status import GameStatus
-from src.enums_and_types.enums import MessageCode, GameOverConditions
+from src.common.enums import MessageCode, GameOverConditions
 
 class TestGameStatus(unittest.TestCase):
 

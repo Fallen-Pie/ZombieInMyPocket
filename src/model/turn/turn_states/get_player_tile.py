@@ -1,7 +1,7 @@
 """Get the players tile"""
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
+
+from ..state import State, StateNames, ServiceNames, ServiceMethods, Triggers
 
 
 class GetPlayerTile(State):

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from src.model.player.player import Player
-from src.model.interfaces.i_item import IItem
+from src.common.interfaces.i_item import IItem
 
 
 class TestPlayerInventoryLimit(unittest.TestCase):

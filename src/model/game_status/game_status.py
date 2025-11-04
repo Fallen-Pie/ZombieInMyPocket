@@ -1,5 +1,4 @@
-from ..interfaces.i_game_status import IGameStatus
-from ...enums_and_types.enums import MessageCode, GameOverConditions
+from src.common import IGameStatus, MessageCode, GameOverConditions
 
 class GameStatus(IGameStatus):
 

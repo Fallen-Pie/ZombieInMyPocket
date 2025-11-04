@@ -1,7 +1,9 @@
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
-from src.enums_and_types import Direction
+
+from src.common import Direction
+
+from ..state import State, StateNames, Triggers, ServiceNames, ServiceMethods
+
 
 class SelectExit(State):
     """Ask the user to select an exit from a give tile"""
@@ -45,7 +47,7 @@ class SelectExit(State):
         tile_exits = self.get_tile_exits()
         tile_name = self._tile.get_name(),
         self.use_service(
-            ServiceNames.UI,
+            ServiceNames.CONTROLLER,
             ServiceMethods.GET_INPUT,
             prompt = f"Pick an exit on the {tile_name} tile",
             options = tile_exits,
