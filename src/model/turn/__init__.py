@@ -1,0 +1,25 @@
+from os import getenv
+
+
+from .turn import Turn
+
+__all__ = [
+    "Turn"
+]
+
+if getenv("RUNNING_TESTS"):
+    #running tests for the turn packages only
+    #set environment variable to "RUNNING_TURN_TESTS=1"
+
+    from .turn_flow import TurnFlow
+    from .state import State
+    from .turn_common import Triggers, StateNames, ServiceNames, ServiceMethods
+
+    __all__ = [
+        "State",
+       "TurnFlow",
+       "Triggers",
+       "StateNames",
+       "ServiceNames",
+       "ServiceMethods",
+    ]
