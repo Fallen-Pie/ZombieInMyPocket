@@ -17,20 +17,28 @@ class ITile(ABC):
     """
 
     @abstractmethod
+    def set_name(self, name) -> None:
+        pass
+
+    @abstractmethod
+    def set_exists(self, direction) -> None:
+        pass
+
+    @abstractmethod
+    def set_front_door(self, front_door) -> None:
+        pass
+
+    @abstractmethod
+    def set_encounter(self, encounter) -> None:
+        pass
+
+
+    @abstractmethod
     def get_name(self) -> str:
         """Get the name of this tile.
         
         Returns:
             The tile's descriptive name
-        """
-        pass
-
-    @abstractmethod
-    def is_outdoors(self) -> bool:
-        """Check if this tile represents an outdoor area.
-        
-        Returns:
-            True if this is an outdoor tile, False for indoor
         """
         pass
 
