@@ -1,3 +1,4 @@
+from src.model import Player
 from src.model.interfaces import IEncounter, IPlayer
 
 class CombatEncounter(IEncounter):
@@ -9,8 +10,8 @@ class CombatEncounter(IEncounter):
         self.zombies = value
 
     def handle_encounter(self, player) -> IPlayer:
-        if player is not IPlayer:
-            raise TypeError("Health Encounter can only be handled by a Player")
+        #if player is not Player:
+        #    raise TypeError("Health Encounter can only be handled by a Player")
         damage = self.zombies - player.get_attack_power()
         if damage > self.MAX_DAMAGE:
             damage = self.MAX_DAMAGE

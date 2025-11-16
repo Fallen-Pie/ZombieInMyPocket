@@ -6,7 +6,5 @@ class ItemEncounter(IEncounter):
         self.item = new_item
 
     def handle_encounter(self, player) -> IPlayer:
-        if player is not IPlayer:
-            raise TypeError("Health Encounter can only be handled by a Player")
         player.add_item_to_inventory(self.item)
         return player
