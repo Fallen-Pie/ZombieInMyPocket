@@ -1,8 +1,13 @@
+from .tile_builder import IndoorTileBuilder, OutdoorTileBuilder
+from .tile_director import TileDirector
+from ..encounters.health_encounter import HealthEncounter
+from ..encounters.item_encounter import ItemEncounter
+from ..encounters.not_implemented_encounters import TotemEncounter
 from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
 from ..game_time.game_time import ITime
-from .tile import Tile
+#from .tile import Tile
 from .dev_card import DevCard
 from .board import Board
 from src.enums_and_types import *
@@ -17,8 +22,11 @@ class GamePieces(IGamePieces):
     def setup(self, time: ITime) -> None:
         self._board = Board()
         self._dev_cards: list[IDevCard] = DevCard.get_dev_cards()
-        self._indoor_tiles: list[ITile] = Tile.get_indoor_tiles()
-        self._outdoor_tiles: list[ITile] = Tile.get_outdoor_tiles()
+
+        self._tile_director = TileDirector()
+        self._indoor_tiles: list[ITile] = self.get_indoor_tiles()
+        self._outdoor_tiles: list[ITile] = self.get_outdoor_tiles()
+
         self._time = time
 
         # The top card before it is shuffled is the foyer
@@ -30,6 +38,79 @@ class GamePieces(IGamePieces):
         shuffle(self._indoor_tiles)
         shuffle(self._outdoor_tiles)
         shuffle(self._dev_cards)
+
+    def get_indoor_tiles(self) -> list[ITile]:
+        builder = IndoorTileBuilder()
+        indoor_tiles: list[ITile] = []
+        self._tile_director.set_builder(builder)
+
+        self._tile_director.build_minimal_tite("Bathroom", Direction.NORTH)
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_encounter("Kitchen",
+            (Direction.NORTH, Direction.EAST, Direction.WEST), HealthEncounter(1))
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_encounter("Storage",
+            Direction.NORTH, ItemEncounter(None))
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_encounter("Evil Temple",
+            (Direction.EAST, Direction.WEST), TotemEncounter(False))
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Family Room", (Direction.NORTH, Direction.EAST, Direction.WEST))
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_exit("Dining Room",
+            (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST), Direction.NORTH)
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Bedroom", (Direction.NORTH, Direction.WEST))
+        indoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Foyer", Direction.NORTH)
+        indoor_tiles.append(builder.product)
+
+        return indoor_tiles
+
+    def get_outdoor_tiles(self) -> list[ITile]:
+        builder = OutdoorTileBuilder()
+        outdoor_tiles: list[ITile] = []
+        self._tile_director.set_builder(builder)
+
+        self._tile_director.build_tite_with_encounter("Garden",
+            (Direction.EAST, Direction.SOUTH, Direction.WEST), HealthEncounter(1))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Sitting Area",
+            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Yard",
+            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_encounter("Graveyard",
+            (Direction.EAST, Direction.SOUTH), TotemEncounter(False))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Garage", (Direction.SOUTH, Direction.WEST))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_tite_with_exit("Patio",
+            (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Yard",
+            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        outdoor_tiles.append(builder.product)
+
+        self._tile_director.build_minimal_tite("Yard",
+            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        outdoor_tiles.append(builder.product)
+
+        return outdoor_tiles
 
     def draw_dev_card(self) -> IDevCard:
         # Increase the time and reshuffle if no cards are left
