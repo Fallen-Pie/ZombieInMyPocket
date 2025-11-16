@@ -3,7 +3,7 @@ from .game_pieces import GamePieces
 from ..interfaces.i_dev_card import IDevCard
 from ..interfaces.i_game_pieces import IGamePieces
 from ..interfaces.i_tile import ITile
-from .tile import Tile
+from .tile import IndoorTile, OutdoorTile
 
 
 __all__ = [
@@ -12,5 +12,6 @@ __all__ = [
     'IDevCard',
     'IGamePieces',
     'ITile',
-    'Tile',
+    'IndoorTile',
+    'OutdoorTile',
 ]

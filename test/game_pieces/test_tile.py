@@ -1,33 +1,33 @@
-from src.model.game_pieces import Tile
 import unittest
 from src.enums_and_types import *
+from src.model.game_pieces.tile import OutdoorTile
+from src.model.game_pieces.tile_builder import IndoorTileBuilder, OutdoorTileBuilder
+from src.model.game_pieces.tile_director import TileDirector
 
 
 class TestTile(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.family_room_tile = Tile(
-            "Family Room",
-            False,
-            (Direction.WEST, Direction.NORTH, Direction.EAST),
-            None,
-            None
-        )
+        tile_director = TileDirector()
 
-        self.patio_tile = Tile(
-            "Patio",
-            True,
-            (Direction.NORTH, Direction.EAST, Direction.SOUTH),
-            Direction.NORTH,
-            None
-        )
+        builder = IndoorTileBuilder()
+        tile_director.set_builder(builder)
+        tile_director.build_minimal_tite("Family Room",
+            (Direction.WEST, Direction.NORTH, Direction.EAST))
+        self.family_room_tile = builder.product
+
+        builder = OutdoorTileBuilder()
+        tile_director.set_builder(builder)
+        tile_director.build_tite_with_exit("Patio",
+            (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
+        self.patio_tile = builder.product
 
     def test_get_name(self):
         self.assertEqual(self.family_room_tile.get_name(), "Family Room")
 
     def test_is_outdoors(self):
-        self.assertTrue(self.patio_tile.is_outdoors())
-        self.assertFalse(self.family_room_tile.is_outdoors())
+        self.assertTrue(isinstance(self.patio_tile, OutdoorTile))
+        self.assertFalse(isinstance(self.family_room_tile, OutdoorTile))
 
     def test_get_exits_no_rotation(self):
         self.family_room_tile.set_rotation(Rotation.NONE)
