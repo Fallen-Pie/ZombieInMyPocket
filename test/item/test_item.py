@@ -4,7 +4,7 @@ from src.model.item import get_item, combine_items
 
 
 class TestItem(TestCase):
-    
+
     def test_using_up_single_item(self):
         can = get_item(ItemName.CAN_OF_SODA)
         expected = 1
@@ -15,7 +15,7 @@ class TestItem(TestCase):
         expected = 0
         actual = can.uses_remaining
         self.assertEqual(expected, actual)
-    
+
     def test_using_chainsaw_decrements_uses_remaining(self):
         chainsaw = get_item(ItemName.CHAINSAW)
         expected = 2
@@ -26,7 +26,7 @@ class TestItem(TestCase):
         expected = 1
         actual = chainsaw.uses_remaining
         self.assertEqual(expected, actual)
-    
+
     def test_combining_gasoline_and_chainsaw(self):
         chainsaw = get_item(ItemName.CHAINSAW)
         gasoline = get_item(ItemName.GASOLINE)
