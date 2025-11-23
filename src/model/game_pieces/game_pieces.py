@@ -44,32 +44,32 @@ class GamePieces(IGamePieces):
         indoor_tiles: list[ITile] = []
         self._tile_director.set_builder(builder)
 
-        self._tile_director.build_minimal_tite("Bathroom", Direction.NORTH)
+        self._tile_director.build_minimal_tile("Bathroom", Direction.NORTH)
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_encounter("Kitchen",
-            (Direction.NORTH, Direction.EAST, Direction.WEST), HealthEncounter(1))
+        self._tile_director.build_tile_with_encounter("Kitchen",
+                                                      (Direction.NORTH, Direction.EAST, Direction.WEST), HealthEncounter(1))
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_encounter("Storage",
-            Direction.NORTH, ItemEncounter(None))
+        self._tile_director.build_tile_with_encounter("Storage",
+                                                      Direction.NORTH, ItemEncounter(None))
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_encounter("Evil Temple",
-            (Direction.EAST, Direction.WEST), TotemEncounter(False))
+        self._tile_director.build_tile_with_encounter("Evil Temple",
+                                                      (Direction.EAST, Direction.WEST), TotemEncounter(False))
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Family Room", (Direction.NORTH, Direction.EAST, Direction.WEST))
+        self._tile_director.build_minimal_tile("Family Room", (Direction.NORTH, Direction.EAST, Direction.WEST))
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_exit("Dining Room",
-            (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST), Direction.NORTH)
+        self._tile_director.build_tile_with_exit("Dining Room",
+                                                 (Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST), Direction.NORTH)
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Bedroom", (Direction.NORTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Bedroom", (Direction.NORTH, Direction.WEST))
         indoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Foyer", Direction.NORTH)
+        self._tile_director.build_minimal_tile("Foyer", Direction.NORTH)
         indoor_tiles.append(builder.product)
 
         return indoor_tiles
@@ -79,35 +79,35 @@ class GamePieces(IGamePieces):
         outdoor_tiles: list[ITile] = []
         self._tile_director.set_builder(builder)
 
-        self._tile_director.build_tite_with_encounter("Garden",
-            (Direction.EAST, Direction.SOUTH, Direction.WEST), HealthEncounter(1))
+        self._tile_director.build_tile_with_encounter("Garden",
+                                                      (Direction.EAST, Direction.SOUTH, Direction.WEST), HealthEncounter(1))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Sitting Area",
-            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Sitting Area",
+                                               (Direction.EAST, Direction.SOUTH, Direction.WEST))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Yard",
-            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Yard",
+                                               (Direction.EAST, Direction.SOUTH, Direction.WEST))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_encounter("Graveyard",
-            (Direction.EAST, Direction.SOUTH), TotemEncounter(False))
+        self._tile_director.build_tile_with_encounter("Graveyard",
+                                                      (Direction.EAST, Direction.SOUTH), TotemEncounter(False))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Garage", (Direction.SOUTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Garage", (Direction.SOUTH, Direction.WEST))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_tite_with_exit("Patio",
-            (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
+        self._tile_director.build_tile_with_exit("Patio",
+                                                 (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Yard",
-            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Yard",
+                                               (Direction.EAST, Direction.SOUTH, Direction.WEST))
         outdoor_tiles.append(builder.product)
 
-        self._tile_director.build_minimal_tite("Yard",
-            (Direction.EAST, Direction.SOUTH, Direction.WEST))
+        self._tile_director.build_minimal_tile("Yard",
+                                               (Direction.EAST, Direction.SOUTH, Direction.WEST))
         outdoor_tiles.append(builder.product)
 
         return outdoor_tiles

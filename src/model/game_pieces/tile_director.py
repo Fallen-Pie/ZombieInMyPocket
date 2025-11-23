@@ -11,16 +11,16 @@ class TileDirector:
     def set_builder(self, builder: TileBuilder) -> None:
         self._builder = builder
 
-    def build_minimal_tite(self, name, direction) -> None:
+    def build_minimal_tile(self, name, direction) -> None:
         self.builder.set_name(name)
         self.builder.set_direction(direction)
 
-    def build_tite_with_encounter(self, name, direction, encounter) -> None:
+    def build_tile_with_encounter(self, name, direction, encounter) -> None:
         self.builder.set_name(name)
         self.builder.set_direction(direction)
         self.builder.set_encounter(encounter)
 
-    def build_tite_with_exit(self, name, direction, exit) -> None:
+    def build_tile_with_exit(self, name, direction, exit) -> None:
         self.builder.set_name(name)
         self.builder.set_direction(direction)
         self.builder.set_front_door(exit)

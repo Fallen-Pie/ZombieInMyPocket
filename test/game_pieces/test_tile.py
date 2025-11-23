@@ -12,14 +12,14 @@ class TestTile(unittest.TestCase):
 
         builder = IndoorTileBuilder()
         tile_director.set_builder(builder)
-        tile_director.build_minimal_tite("Family Room",
-            (Direction.WEST, Direction.NORTH, Direction.EAST))
+        tile_director.build_minimal_tile("Family Room",
+                                         (Direction.WEST, Direction.NORTH, Direction.EAST))
         self.family_room_tile = builder.product
 
         builder = OutdoorTileBuilder()
         tile_director.set_builder(builder)
-        tile_director.build_tite_with_exit("Patio",
-            (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
+        tile_director.build_tile_with_exit("Patio",
+                                           (Direction.NORTH, Direction.EAST, Direction.SOUTH), Direction.NORTH)
         self.patio_tile = builder.product
 
     def test_get_name(self):
